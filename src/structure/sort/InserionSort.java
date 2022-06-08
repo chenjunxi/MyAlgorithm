@@ -1,5 +1,4 @@
-package com.Day01;
-
+//插入排序
 public class InserionSort {
 
     public static void insertionSort(int[] arr) {
