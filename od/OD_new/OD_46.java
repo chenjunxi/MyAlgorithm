@@ -1,20 +1,20 @@
-package com.od.OD.OD100;
+package com.od.OD.OD130;
 
 import java.util.*;
 
-//ÕûÀíÆË¿ËÅÆ
+//æ•´ç†æ‰‘å…‹ç‰Œ
 /*  1 1 1 1 3 3 2 2 2 4 5 6 6 6
     1 3 3 3 2 1 5
     4 4 2 1 2 1 3 3 3 4
 
- * Ë¼Â·
- * 1.ÏÈÓÃmap¼ÇÂ¼ÅÆµÄÊıÁ¿¡£
- * 2¡¢4ÒÔÉÏºÍ3·ÅÔÚlist43ÖĞ£¬2¶Ô×Ó·ÅÔÚlist2ÖĞ£¬µ¥ÕÅ·ÅÔÚlist
- * 3.ÏÈ±éÀúlist43£¬4ÕÅÒÔÉÏÕı³£Êä³ö£¬3ÕÅµÄÊ±ºò£¬ÅĞ¶ÏÔÚÁ¬Ğø3ÕÅµÄÊ±ºòĞèÒª²ğ·Ö
- * 4.²ğ·ÖÂß¼­£ºÈç¹û×î´óµÄ¶Ô×ÓÖµºÍ²ğ·ÖµÄ3ÕÅ±È½Ï
- * 5.list2ºÍlistÕı³£±éÀúÊä³ö¼´¿É
+ * æ€è·¯
+ * 1.å…ˆç”¨mapè®°å½•ç‰Œçš„æ•°é‡ã€‚
+ * 2ã€4ä»¥ä¸Šå’Œ3æ”¾åœ¨list43ä¸­ï¼Œ2å¯¹å­æ”¾åœ¨list2ä¸­ï¼Œå•å¼ æ”¾åœ¨list
+ * 3.å…ˆéå†list43ï¼Œ4å¼ ä»¥ä¸Šæ­£å¸¸è¾“å‡ºï¼Œ3å¼ çš„æ—¶å€™ï¼Œåˆ¤æ–­åœ¨è¿ç»­3å¼ çš„æ—¶å€™éœ€è¦æ‹†åˆ†
+ * 4.æ‹†åˆ†é€»è¾‘ï¼šå¦‚æœæœ€å¤§çš„å¯¹å­å€¼å’Œæ‹†åˆ†çš„3å¼ æ¯”è¾ƒ
+ * 5.list2å’Œlistæ­£å¸¸éå†è¾“å‡ºå³å¯
  * */
-public class OD_25 {
+public class OD_46 {
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
@@ -22,7 +22,7 @@ public class OD_25 {
         String[] strings = sc.nextLine().split(" ");
 
 
-        //Í³¼ÆÊıÁ¿
+        //ç»Ÿè®¡æ•°é‡
         Map<Integer, Integer> map = new HashMap<>();
         for (String string : strings) {
             int i = Integer.valueOf(string);
@@ -34,7 +34,7 @@ public class OD_25 {
         ArrayList<Integer> list = new ArrayList<>();
 
 
-        //¸ù¾İ´ÎÊı´æ·Å¶ÔÓ¦µÄlistÖĞ
+        //æ ¹æ®æ¬¡æ•°å­˜æ”¾å¯¹åº”çš„listä¸­
         for (Map.Entry<Integer, Integer> m : map.entrySet()) {
             Integer value = m.getValue();
 
@@ -47,7 +47,7 @@ public class OD_25 {
             }
         }
 
-        //×Ô¶¨ÒåÅÅĞò
+        //è‡ªå®šä¹‰æ’åº
         list43.sort((a, b) -> {
             if (a.getValue() != b.getValue()) return b.getValue() - a.getValue();
             return b.getKey() - a.getKey();
@@ -58,33 +58,33 @@ public class OD_25 {
             return b.getKey() - a.getKey();
         });
 
-        //´æ·ÅÊä³ö
+        //å­˜æ”¾è¾“å‡º
         StringBuilder sb = new StringBuilder();
 
-        //ÏÈ±éÀúlist43
+        //å…ˆéå†list43
         for (int i = 0; i < list43.size(); i++) {
             Map.Entry<Integer, Integer> temp = list43.get(i);
             int key = temp.getKey();
             int count = temp.getValue();
 
-            //ÅĞ¶ÏÊÇ·ñÊÇÁ¬Ğø3ÕÅ
+            //åˆ¤æ–­æ˜¯å¦æ˜¯è¿ç»­3å¼ 
             if (i > 0 && list43.get(i - 1) != null && list43.get(i - 1).getValue() == 3 && count == 3) {
 
-                if (list2.size() > 0) { //µ±ÓĞ¶Ô×ÓµÄÊ±ºò
-                    if (list43.get(i).getKey() > list2.get(0).getKey()) { //±È½Ï¶Ô×Ó×î´óÖµºÍµ±Ç°²ğ·ÖµÄ3ÕÅÖµ
+                if (list2.size() > 0) { //å½“æœ‰å¯¹å­çš„æ—¶å€™
+                    if (list43.get(i).getKey() > list2.get(0).getKey()) { //æ¯”è¾ƒå¯¹å­æœ€å¤§å€¼å’Œå½“å‰æ‹†åˆ†çš„3å¼ å€¼
                         list.add(key);
                         count = 2;
-                        list43.set(i, null);//²ğ·ÖÖ®ºóÖÃÎªnull,·ÀÖ¹²ÎÓëÏÂ´Î±È½Ï
+                        list43.set(i, null);//æ‹†åˆ†ä¹‹åç½®ä¸ºnull,é˜²æ­¢å‚ä¸ä¸‹æ¬¡æ¯”è¾ƒ
                     } else {
                         key = list2.get(0).getKey();
                         count = list2.get(0).getValue();
                         list2.remove(0);
-                        i--;  //¹Ø¼ü²Ù×÷£¬Ïàµ±ÓÚÏÂ´Î±éÀúÔÙ´Î»Øµ½µ±Ç°±éÀú
+                        i--;  //å…³é”®æ“ä½œï¼Œç›¸å½“äºä¸‹æ¬¡éå†å†æ¬¡å›åˆ°å½“å‰éå†
                     }
-                } else {  //Ã»ÓĞ¶Ô×ÓµÄÊ±ºò×ÔÈ»ÊÇÒª²ğ·ÖµÄ
+                } else {  //æ²¡æœ‰å¯¹å­çš„æ—¶å€™è‡ªç„¶æ˜¯è¦æ‹†åˆ†çš„
                     list.add(key);
                     count = 2;
-                    list43.set(i, null); //²ğ·ÖÖ®ºóÖÃÎªnull,·ÀÖ¹²ÎÓëÏÂ´Î±È½Ï
+                    list43.set(i, null); //æ‹†åˆ†ä¹‹åç½®ä¸ºnull,é˜²æ­¢å‚ä¸ä¸‹æ¬¡æ¯”è¾ƒ
                 }
 
             }
