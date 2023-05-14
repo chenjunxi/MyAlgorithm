@@ -2,8 +2,15 @@ package com.od.OD.OD130;
 
 import java.util.Scanner;
 import java.util.*;
-/*快速开租建站
-*
+/*快速开租建站 拓扑排序
+求一个站点的最短开战时间
+5
+3 表示3个依赖任务
+0 3 0任务依赖3任务
+0 4
+1 3
+输出2
+
 * */
 
 class OD_81_new {
