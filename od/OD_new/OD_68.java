@@ -2,19 +2,16 @@ package com.od.OD.OD130;
 
 import java.util.*;
 import java.util.stream.Collectors;
+
 /*
 * 士兵过河
-*
+5 5个士兵
+43 敌人到达时间
+12 13 15 20 50 每个个士兵划船过河的时长
+输出存活士兵最多，且用时最短
+3 40
 * */
-class OD_68_new {
-    //二叉树定义
-    public static class TreeNode {
-        int val;
-        TreeNode left;
-        TreeNode right;
-        TreeNode() {}
-        TreeNode(int val) { this.val = val;}
-    }
+class OD_68 {
 
     public static void main(String[] args) {
         // 输入处理
@@ -37,8 +34,7 @@ class OD_68_new {
                 }
             } else if (i == 1) {
                 dp[1] = a[1];
-            }
-            else {
+            } else {
                 dp[i] = Math.min(dp[i - 1] + a[i] + a[0], dp[i - 2] + a[0] + a[i] + a[1] + a[1]);
             }
             if (dp[i] > T) {

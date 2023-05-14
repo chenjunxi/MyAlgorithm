@@ -2,18 +2,20 @@ package com.od.OD.OD130;
 
 import java.util.Scanner;
 import java.util.*;
-/*快速开租建站 拓扑排序
-求一个站点的最短开战时间
+/*快速开租建站 leetcode210
+拓扑排序 就是先去取出没箭头的项(即入度=0)加入排序，然后再取没箭头的项
+求所有建站完成最少时间
 5
 3 表示3个依赖任务
-0 3 0任务依赖3任务
+0 3 3任务依赖0任务 0->3
 0 4
 1 3
-输出2
+输出2 第0、1 、2同时部署，因为他们入度为0;再同时部署3 和4 ，所以共花2个时间
+其实就是统计一共发生了几次入度为0
 
 * */
 
-class OD_81_new {
+class OD_81 {
     public static void main(String[] args) {
         // 处理输入
         Scanner in = new Scanner(System.in);

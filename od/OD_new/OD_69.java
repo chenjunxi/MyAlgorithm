@@ -4,10 +4,23 @@ import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.Collectors;
+
 /*查找二叉树节点/查找树中元素
-*
-* */
-class OD_69_new {
+
+输入
+6
+10 1 2  表示根节点的值为10，根节点的子节点在索引1(就是第二行的-21 3 4)和2(就是第三行的23 5)
+-21 3 4
+23 5
+14
+35
+66
+1 1 查找（1,1）坐标对应的值
+构成二叉树之后
+输出{23}
+ * */
+class OD_69 {
+
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         int size = Integer.parseInt(in.nextLine());
@@ -46,11 +59,12 @@ class OD_69_new {
     }
 
     /**
-     *  求出n层所有数据并加入list集合中
-     * @param nodes     节点信息二维数组
-     * @param index     子节点索引
-     * @param n         树的层数递减（遍历几次代表几层）
-     * @param list      所求层的所有数据集合
+     * 求出n层所有数据并加入list集合中
+     *
+     * @param nodes 节点信息二维数组
+     * @param index 子节点索引
+     * @param n     树的层数递减（遍历几次代表几层）
+     * @param list  所求层的所有数据集合
      */
     private static void handle(int[][] nodes, int index, int n, List<Integer> list) {
 
