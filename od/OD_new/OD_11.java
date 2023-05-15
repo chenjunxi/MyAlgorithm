@@ -7,70 +7,63 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 /*羊狼农夫过河
- *
- *
+农夫在的时候或者羊数量大于狼的时候，狼不会攻击羊，求在不损失羊的情况下，运输几次过河
+5 3 3 5羊 3狼，船能载的数量
+输出3
+第一次 2只狼
+第二次 3只羊
+第三次 2羊1狼
+
  * */
 public class OD_11 {
-    public static int min_times;
+
+    public static int min = Integer.MAX_VALUE;
+    public static int countY;   //羊的总数
+    public static int countL;   //狼的总数
 
     public static void main(String[] args) {
-        // 处理输入
-        Scanner in = new Scanner(System.in);
-        //转为数组
-        List<Integer> nums = Arrays.stream(in.nextLine().split(" "))
-                .map(Integer::parseInt)
-                .collect(Collectors.toList());
-        int M = nums.get(0);
-        int N = nums.get(1);
-        int X = nums.get(2);
 
-        min_times = (M + N) * X;
+        Scanner sc = new Scanner(System.in);
 
-        // 表示已运输到对岸的羊、狼个数
-        int m_temp = 0;
-        int n_temp = 0;
+        int m = sc.nextInt();
+        int n = sc.nextInt();
+        int x = sc.nextInt();
 
-        transport(M, N, X, m_temp, n_temp, 0);
+        countY = m;
+        countL = n;
 
-        if (min_times == (M + N) * X) {
+        guohe(m, n, x, 0);
+
+        if (m + n <= x) {     //一趟能运完
+            System.out.println(1);
+        } else if (min == Integer.MAX_VALUE) {
             System.out.println(0);
         } else {
-            System.out.println(min_times);
+            System.out.println(min);
         }
 
     }
 
-    // m0, n0 分别表示剩余的羊、狼个数， x为船容量
-    // m1, n1 分别表示运输到对岸的羊、狼个数，times为次数
-    public static int transport(int m0, int n0, int x, int m1, int n1, int times) {
-        //若可以一次性运走，结束了，注意等于号。。。
-        if (x >= m0 + n0) {
-            if (times + 1 < min_times) {
-                min_times = times + 1;
-            }
-            return times + 1;
-        }
-        //尝试运一部分狼一部分羊
-        //要上船的羊数量不可以超过岸上数量、也不可以超过船的容量
-        for (int i = 0; i <= m0 && i <= x; i++) {
-            //要上船的狼的数量不可以超过岸上数量、也不可以超过船装了羊后的剩余的容量
-            for (int j = 0; j <= n0 && i + j <= x; j++) {
-                //不可以不运
-                if (i + j == 0) {
-                    continue;
-                }
-                //船离岸后，原来这岸，要么没有羊，要么羊比狼多，才可以运；对岸也要检查，不考虑回程带动物
-                if ((m0 - i == 0 || m0 - i > n0 - j) && (m1 + i == 0 || m1 + i > n1 + j)) {
-                    //运一次
-                    int result = transport(m0 - i, n0 - j, x, m1 + i, n1 + j, times + 1);
-                    //如果获取了结果，和minTime比较，但是不结束，继续检查
-                    if (result < min_times && result != 0) {
-                        min_times = result;
+    public static void guohe(int m, int n, int x, int count) {
+
+        if (m + n <= x) {     //剩下的能一次运完
+            min = Math.min(min, count + 1);
+        } else {
+            for (int i = 0; i <= m; i++) {    //过河的羊的个数
+                for (int j = 0; j <= n; j++) {    //过河的狼的个数
+                    if ((i + j == 0) || (i + j > x)) {     //在船上的狼羊总数需要大于0且小于等于x
+                        continue;
                     }
+                    if (m - i != 0 && m - i <= n - j) {     //剩下的羊在不为0的情况下必须大于狼
+                        continue;
+                    }
+                    if (countY - (m - i) != 0 && (countY - (m - i)) <= (countL - (n - j))) {      //对岸的羊在不为0的情况下必须要大于狼
+                        continue;
+                    }
+                    guohe(m - i, n - j, x, count + 1);
                 }
             }
         }
-        //没有方案了。。返回0
-        return 0;
+
     }
 }

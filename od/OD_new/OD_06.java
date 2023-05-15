@@ -3,8 +3,13 @@ package com.od.OD.OD130;
 import java.util.*;
 
 /*单链表中间节点
- *
- *
+00100 4  头节点地址 4个元素
+00000 4 -1 节点地址 值 下一个节点地址 -1表示是尾节点
+00100 1 12309
+33218 3 00000
+12309 2 33219
+
+利用map知识点
  * */
 public class OD_06 {
     public static class Node {
@@ -21,6 +26,7 @@ public class OD_06 {
         // 通过map快速寻址
         Map<String, Node> map = new HashMap<>();
         Scanner in = new Scanner(System.in);
+
         // 初始化元信息和具体数据
         String[] mate = in.nextLine().split(" ");
         for (int i = 0; i < Integer.parseInt(mate[1]); i++) {

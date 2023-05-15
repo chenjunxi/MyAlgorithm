@@ -1,6 +1,5 @@
 package com.od.OD.OD130;
 
-import java.util.Scanner;
 import java.util.*;
 
 /*
@@ -22,7 +21,7 @@ public class OD_05 {
         for (int i = min; i < max; i++) {
             if (max % i == 0) {     //满足整除的情况下才能进行平分
                 int[] temp = new int[max / i];    //桶的个数
-                if (check(ints, 0, temp, i)) {
+                if (handle(ints, 0, temp, i)) {
                     res = i;
                     break;
                 }
@@ -32,16 +31,8 @@ public class OD_05 {
         System.out.println(res);
     }
 
-    /**
-     * 判断当前桶能否装完所有物体
-     *
-     * @param nums   物体集合
-     * @param index  物体索引
-     * @param bucket 桶数组
-     * @param weight 桶的承重
-     * @return
-     */
-    public static boolean check(int[] nums, int index, int[] bucket, int weight) {
+
+    public static boolean handle(int[] nums, int index, int[] bucket, int weight) {
         /*
          * index == nums.length说明都放完了
          */
@@ -58,7 +49,7 @@ public class OD_05 {
                 // 放入
                 bucket[i] = bucket[i] + nums[index];
                 // 后续递归放入剩余的物体
-                if (check(nums, index + 1, bucket, weight)) {
+                if (handle(nums, index + 1, bucket, weight)) {
                     return true;
                 }
                 //上面的策略失败了,就回退,继续尝试后面的策略

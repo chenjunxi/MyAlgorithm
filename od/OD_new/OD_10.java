@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 
 /*
 * 真正的密码
-在一行中输入一个字符串数组，如果其中一个字符串的所有以索引0开头的子串在数组中都有，那么这个字符串就是潜在密码，在所有潜在密码中最长的是真正的密码，如果有多个长度相同的真正的密码，那么取字典序最大的为唯一的真正的密码，求唯一的真正的密码。
 示例1：
 输入： h he hel hell hello o ok n ni nin ninj ninja
 输出： ninja
@@ -17,6 +16,8 @@ a b c d f
 输出：
 f
 说明： 按要求，a b c d f 都是潜在密码。检查长度，a b c d f 是真正的密码。检查字典序，f是唯一真正密码。
+
+思路：以首字母做为key存放map中，然后map元素存放在list中，list进行排序，list第一个元素就是答案
 * */
 public class OD_10 {
     public static int min_times;
@@ -26,15 +27,41 @@ public class OD_10 {
         Scanner in = new Scanner(System.in);
         String[] strs = in.nextLine().split(" ");
 
+
+        HashMap<Character, String> map = new HashMap<>();
+
+        for (int i = 0; i < strs.length; i++) {
+            char c = strs[i].charAt(0);
+            if (map.containsKey(c)) {
+                String s = map.get(c);
+                if (strs[i].length() > s.length()) {
+                    map.put(c, strs[i]);
+                }
+            } else {
+                map.put(c, strs[i]);
+            }
+        }
+        ArrayList<Map.Entry<Character, String>> list = new ArrayList<>(map.entrySet());
+
+        list.sort((a, b) -> {
+            String valuea = a.getValue();
+            String valueb = b.getValue();
+            if (valuea.length() != valueb.length()) return valueb.length() - valuea.length();
+            return -valuea.compareTo(valueb);
+        });
+
+
+        System.out.println(list.get(0).getValue());
+
+    }
+
+    //暴力
+    private static void demo01(String[] strs) {
+
         // 将所有字符串放入哈希集合
         HashSet<String> word_set = new HashSet<>();
-        for (String s : strs) {
-            word_set.add(s);
-        }
-
-        // 真正的密码
+        word_set.addAll(Arrays.asList(strs));
         String true_pass_word = "";
-
         //按顺序检查每一个词
         for (String s : strs) {
             // 条件1：检查这个词所有以索引0开头的子串在数组中是否都有
@@ -58,7 +85,6 @@ public class OD_10 {
                 }
             }
         }
-
         System.out.println(true_pass_word);
     }
 }
