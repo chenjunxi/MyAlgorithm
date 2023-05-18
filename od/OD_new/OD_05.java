@@ -3,7 +3,7 @@ package com.od.OD.OD130;
 import java.util.*;
 
 /*
-* 等和子数组最小和 和MVP争夺题类型
+* 等和子数组最小和 和OD_20一样
 7
 4,3,2,3,5,2,1
 * */

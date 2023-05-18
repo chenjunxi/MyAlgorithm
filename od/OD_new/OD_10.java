@@ -26,32 +26,7 @@ public class OD_10 {
         // 处理输入
         Scanner in = new Scanner(System.in);
         String[] strs = in.nextLine().split(" ");
-
-
-        HashMap<Character, String> map = new HashMap<>();
-
-        for (int i = 0; i < strs.length; i++) {
-            char c = strs[i].charAt(0);
-            if (map.containsKey(c)) {
-                String s = map.get(c);
-                if (strs[i].length() > s.length()) {
-                    map.put(c, strs[i]);
-                }
-            } else {
-                map.put(c, strs[i]);
-            }
-        }
-        ArrayList<Map.Entry<Character, String>> list = new ArrayList<>(map.entrySet());
-
-        list.sort((a, b) -> {
-            String valuea = a.getValue();
-            String valueb = b.getValue();
-            if (valuea.length() != valueb.length()) return valueb.length() - valuea.length();
-            return -valuea.compareTo(valueb);
-        });
-
-
-        System.out.println(list.get(0).getValue());
+        demo01(strs);
 
     }
 

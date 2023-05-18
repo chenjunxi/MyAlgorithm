@@ -36,10 +36,10 @@ class OD_100 {
 
         //遍历每一个天线
         String res = "";
-        for(int i=0;i<row_count;i++){
-            for(int j=0;j<col_count;j++){
-                int count = south(anth,i,j) + east(anth,i,j);
-                if (i==row_count-1 && j==col_count-1) {
+        for (int i = 0; i < row_count; i++) {
+            for (int j = 0; j < col_count; j++) {
+                int count = south(anth, i, j) + east(anth, i, j);
+                if (i == row_count - 1 && j == col_count - 1) {
                     res += count;
                 } else {
                     res += count + " ";
@@ -54,19 +54,19 @@ class OD_100 {
     }
 
     //东向判断,其实是以当前天线向西遍历判断
-    public static int east( int[][] anth, int i, int j){
+    public static int east(int[][] anth, int i, int j) {
         //第0根天线肯定无法接收信号
-        if(j==0) return 0;
+        if (j == 0) return 0;
 
-        int max_height = anth[i][j-1];
+        int max_height = anth[i][j - 1];
         // 当前天线的西侧第一根天线必然可以接收
         int count = 1;
 
-        for(int k=j-2; k>=0; k--){
-            if(max_height >= anth[i][j]){
+        for (int k = j - 2; k >= 0; k--) {
+            if (max_height >= anth[i][j]) {
                 break;
             }
-            if(anth[i][k]>max_height){
+            if (anth[i][k] > max_height) {
                 count++;
                 max_height = anth[i][k];
             }
@@ -76,19 +76,19 @@ class OD_100 {
     }
 
     //南向判定，其实是以当前天线向北遍历判断
-    public static int south( int[][] anth, int i, int j){
+    public static int south(int[][] anth, int i, int j) {
         //第0根天线肯定无法接收信号
-        if(i==0) return 0;
+        if (i == 0) return 0;
 
-        int max_height = anth[i-1][j];
+        int max_height = anth[i - 1][j];
         // 当前天线的北侧第一根天线必然可以接收
         int count = 1;
 
-        for(int k=i-2; k>=0; k--){
-            if(max_height >= anth[i][j]){
+        for (int k = i - 2; k >= 0; k--) {
+            if (max_height >= anth[i][j]) {
                 break;
             }
-            if(anth[k][j]>max_height){
+            if (anth[k][j] > max_height) {
                 count++;
                 max_height = anth[k][j];
             }

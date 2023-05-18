@@ -14,6 +14,7 @@ import java.util.Scanner;
 200
 400
 
+和103题一样
 * */
 
 public class OD_14 {

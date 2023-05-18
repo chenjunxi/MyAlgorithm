@@ -3,7 +3,7 @@ package com.od.OD.OD130;
 import java.util.Arrays;
 
 /*最大平分数组
- *
+ *和DO_05一样
  * */
 public class OD_20 {
     public static void main(String[] args) {

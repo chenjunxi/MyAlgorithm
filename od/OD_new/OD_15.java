@@ -6,7 +6,9 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 /*
 *探索地块建立 /光伏场地建设规划
-*
+2 5 2 6
+1 3 4 5 8
+2 3 6 7 1
 * */
 public class OD_15 {
     public static void main(String[] args) {
