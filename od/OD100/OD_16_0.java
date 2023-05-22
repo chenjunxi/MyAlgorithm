@@ -2,6 +2,20 @@ package com.od.OD.OD100;
 
 import java.util.Scanner;
 
+//商场优惠活动
+
+/*
+思路：
+暴力枚举所有类型：先满减后打折 先打折后满减 先满减后无门槛 先打折后无门槛 先无门槛后打折
+满减函数：先money/100,求出张数，money-10*张数
+3 2 5
+3
+100
+200
+400
+
+* */
+
 public class OD_16_0 {
 
     public static int manjian;
@@ -22,117 +36,97 @@ public class OD_16_0 {
 
         int n = sc.nextInt();
 
-        for(int i=0; i<n; i++){
+        for (int i = 0; i < n; i++) {
 
             double money = sc.nextInt();
-
-            //首先使用满减的张数
-            int quanMJ = money/100 > manjian ? manjian : (int) (money / 100);
-
-            //使用无门槛的券的张数
-            int quanWMK;
-            //券的最小使用量
             mincountQuan = Integer.MAX_VALUE;
-            //最少价格
             minCount = Integer.MAX_VALUE;
-
-            if(dazhe > 0){  //有打折券的情况
-
-                //先满减后打折
-                int MJafterDZ = (int) Math.floor(Manjian(money) * 0.92);
-                flush( MJafterDZ, quanMJ + 1);
-
-                //先打折后满减
-                int DZafterMJ = (int) Math.floor(Manjian(money * 0.92));
-                //先打折后满减的满减券
-                int quanDZafterMJ = (int) (money * 0.92 / 100 > manjian ? manjian : money * 0.92 / 100);
-                flush( DZafterMJ, quanDZafterMJ + 1);
-
-                //先打折后无门槛
-                double dazhe = money * 0.92;
-                //无门槛需要的张数
-                quanWMK = wumenkan(dazhe);
-                int dazheWMK;
-                if(dazhe <= quanWMK * 5){
-                    //打折后的价格小于等于无门槛的全部价格（可以0元购）
-                    dazheWMK = 0;
-                }else {
-                    dazheWMK = (int) Math.floor(dazhe - quanWMK * 5);
-                }
-                flush( dazheWMK, quanWMK + 1);
-
-                //先无门槛后打折
-                int wmkDZ;
-                //无门槛需要的张数
-                quanWMK = wumenkan(money);
-                if(money <= quanWMK * 5 ){
-                    //价格小于等于无门槛的全部价格（可以0元购）
-                    flush( 0, quanWMK);
-                }else {
-                    wmkDZ = (int) Math.floor((money - quanWMK * 5) * 0.92);
-                    flush( wmkDZ, quanWMK + 1);
-                }
+            //有打折的情况下
+            if (dazhe >= 1) {
+                manjiandazhe(money);
+                dazhemanjian(money);
+                dazhewumenkan(money);
+                wumenkandazhe(money);
             }
-
-            //先满减后无门槛
-            int mjWMK;
-            double manjian= Manjian(money);
-            //无门槛需要的张数
-            quanWMK =  wumenkan(manjian);
-            if(manjian <= quanWMK * 5){
-                //满减后的价格小于等于无门槛的全部价格（可以0元购）
-                mjWMK = 0;
-            }else {
-                mjWMK = (int) Math.floor(manjian - quanWMK * 5);
-            }
-            flush( mjWMK, quanWMK + quanMJ);
-
+            manjianwumenkan(money);
             System.out.println(minCount + " " + mincountQuan);
-
         }
     }
 
-    /**
-     * 刷新最少价格和最少使用券
-     * @param count
-     * @param quanCount
-     */
-    public static void flush(int count, int quanCount){
-        if(count < minCount){
-            minCount = count;
+    public static void update(int quanCount, int moneyCount) {
+        if (moneyCount < minCount) {
+            minCount = moneyCount;
             mincountQuan = quanCount;
-        }else if(count == minCount){
-            mincountQuan = Math.min( quanCount, mincountQuan);
+        } else if (moneyCount == minCount) {
+            mincountQuan = mincountQuan > quanCount ? quanCount : mincountQuan;
         }
     }
 
-    /**
-     * 求出需要无门槛优惠券的张数
-     * @param money
-     * @return
-     */
-    public static int wumenkan(double money){
+    public static int getManjianQuan(double money) {
+        return money / 100 >= manjian ? manjian : (int) (money / 100);
+    }
 
-        for(int i=1; i<=wumenkan; i++){
-            if(money <= 5 * i) {
+    public static int getWumenkanQuan(double money) {
+        for (int i = 1; i <= wumenkan; i++) {
+            if (money <= 5 * i) {
                 return i;
             }
         }
-
         return wumenkan;
     }
 
-    /**
-     * 满减后的价格
-     * @param money
-     * @return
-     */
-    public static double Manjian(double money){
+    //    先满减后打折
+    public static void manjiandazhe(double money) {
+        int count = getManjianQuan(money);
 
-        if(money/100 >= manjian){
-            return money - manjian*10;
-        }else {
-            return money - ((int) money/100)*10;
+        int afterMoney = (int) Math.floor((money - count * 10) * 0.92);
+
+        update(count + 1, afterMoney);
+    }
+
+    //    先打折后满减
+    public static void dazhemanjian(double money) {
+        double v = money * 0.92;
+        int count = getManjianQuan(v);
+
+        int afterMoney = (int) Math.floor(v - count * 10);
+        update(count + 1, afterMoney);
+    }
+//    先打折后无门槛
+
+    public static void dazhewumenkan(double money) {
+        double v = money * 0.92;
+        int count = getWumenkanQuan(v);
+        int afterMoney = v <= count * 5 ? 0 : (int) Math.floor(v - count * 5);
+        update(count + 1, afterMoney);
+    }
+
+
+    //    先无门槛后打折
+    public static void wumenkandazhe(double money) {
+        int count = getWumenkanQuan(money);
+        if (money <= count * 5) {
+            update(0, count);
+        } else {
+            int afterMoney = (int) Math.floor((money - count * 5) * 0.92);
+            update(count + 1, afterMoney);
         }
+    }
+
+    //    先满减后无门槛
+    public static void manjianwumenkan(double money) {
+        int mjCount = getManjianQuan(money);
+
+        int wmkCount = getWumenkanQuan(money - mjCount * 10);
+
+        int afterMoney;
+        if (money - mjCount * 10 <= wmkCount * 5) {
+
+            afterMoney = 0;
+        } else {
+            afterMoney = (int) Math.floor((money - mjCount * 10 - wmkCount * 5));
+        }
+
+        update(mjCount + wmkCount, afterMoney);
     }
 }
