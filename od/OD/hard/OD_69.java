@@ -43,6 +43,7 @@ class OD_69 {
         return list.stream().mapToInt(it -> it).toArray();
     }
 
+    //以下才是补充代码，上面的代码是官方自带的
     private static String doQuery(int[][] nodes, int x, int y) {
         if (x < 0 || y < 0) {
             return "{}";
@@ -58,14 +59,6 @@ class OD_69 {
         return "{" + list.get(y) + "}";
     }
 
-    /**
-     * 求出n层所有数据并加入list集合中
-     *
-     * @param nodes 节点信息二维数组
-     * @param index 子节点索引
-     * @param n     树的层数递减（遍历几次代表几层）
-     * @param list  所求层的所有数据集合
-     */
     private static void handle(int[][] nodes, int index, int n, List<Integer> list) {
 
         int[] node = nodes[index];

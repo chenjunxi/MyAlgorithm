@@ -10,6 +10,10 @@ import java.util.stream.Collectors;
 12 13 15 20 50 每个个士兵划船过河的时长
 输出存活士兵最多，且用时最短
 3 40
+
+5
+43
+12 13 15 20 50
 * */
 class OD_68 {
 

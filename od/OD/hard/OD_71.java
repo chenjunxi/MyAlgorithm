@@ -1,6 +1,9 @@
 package com.od.OD.bei;
 
+import java.lang.reflect.Array;
 import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /*
@@ -19,7 +22,9 @@ import java.util.Scanner;
 输出2
 * */
 public class OD_71 {
+
     public static void main(String[] args) {
+
         ArrayDeque<int[]> sites = new ArrayDeque<>();
         Scanner sc = new Scanner(System.in);
         String[] strs = sc.nextLine().split(" ");
@@ -63,5 +68,7 @@ public class OD_71 {
         }
 
         System.out.println(nums[x][y]);
+
     }
+
 }

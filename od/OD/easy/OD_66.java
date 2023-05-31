@@ -1,4 +1,4 @@
-package com.od.OD.bei;
+package com.od.OD.OD130;
 
 import java.util.Scanner;
 /*简单的自动曝光

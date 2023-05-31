@@ -69,7 +69,10 @@ public class OD_53 {
         while (task_queue.size() > 0) {
             Long[] cur_task = task_queue.poll();
 
-
+            cur_time += cur_task[2];
+            result.add(new Long[] {cur_task[0], cur_time});
         }
+
+        result.forEach(task -> System.out.println(task[0] + " " + task[1]));
     }
 }
