@@ -78,10 +78,9 @@ public class OD02 {
         for (int i : list) {
             max = Math.max(max, i);
         }
+
+        list.remove(list.indexOf(max));
         for (int i = 0; i < list.size(); i++) {
-            if (list.get(i) == max) {
-                continue;
-            }
             System.out.print(list.get(i));
         }
 

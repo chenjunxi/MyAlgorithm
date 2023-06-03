@@ -4,6 +4,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/*
+A长和宽都大于B
+B才可以放在A上面
+
+[[4,6],[3,8],[2,7],[1,4]]
+
+输出3
+list存放长和宽的数组
+排序降序排序
+双循环比较，比较成功之后，要更新参照物
+第一个和后面的比较，得出数量count
+第二个开始和后面的比较，得出数量max=Math.max(count,count1);
+……
+
+ * */
+
+
 public class OD08 {
     public static void main(String[] args) {
 

@@ -4,6 +4,24 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/*
+5 6
+1 2 0
+1 2 1
+1 5 0
+2 3 1
+2 5 1
+1 3 2
+
+5 4
+1 3 0
+2 5 0
+1 2 0
+3 5 1
+
+
+思路就是集合的retainAll来判断是否交集，如果有2个集合之间都有交集，那么这两个集合也要合并，并删除其中一个
+* */
 public class OD09 {
     public static void main(String[] args) {
 
@@ -25,44 +43,36 @@ public class OD09 {
                 int b = Integer.valueOf(str[1]);
                 int c = Integer.valueOf(str[2]);
 
+                List<Integer> team = new ArrayList<>();
+                team.add(a);
+                team.add(b);
+
                 if (a < 1 || a > n || b < 1 || b > n || (c != 0 && c != 1)) { //a,b越界，c只能0和1
                     System.out.println("da pian zi");
                 } else if (c == 0) {
                     boolean hasTeam = false;    //a和b是否有了team
-                    int teamIndex = -1;
-                    boolean isCombine = false;    //是否进行过合并
+                    ArrayList<Integer> indexList = new ArrayList<>();
+
                     for (int j = 0; j < teams.size(); j++) {
-                        if (teams.get(j).contains(a)) {   //team中有了a，则b也是其中成员
-                            teams.get(j).add(b);
-                            if (hasTeam) {    //已经有了team，可以进行合并
-                                teams.get(j).removeAll(teams.get(teamIndex));
-                                teams.get(j).addAll(teams.get(teamIndex));
-                                isCombine = true;
-                                break;
-                            }
-                            teamIndex = j;
+                        List<Integer> list = teams.get(j);
+                        ArrayList<Integer> list1 = new ArrayList<>(list);
+                        list1.retainAll(team);
+                        if (list1.size() > 0) {
+                            list.addAll(team);
                             hasTeam = true;
-                            continue;
-                        }
-                        if (teams.get(j).contains(b)) {   //team中有了b，则a也是其中成员
-                            teams.get(j).add(a);
-                            if (hasTeam) {
-                                teams.get(j).removeAll(teams.get(teamIndex));
-                                teams.get(j).addAll(teams.get(teamIndex));
-                                isCombine = true;
-                                break;
-                            }
-                            teamIndex = j;
-                            hasTeam = true;
+                            indexList.add(j);
                         }
                     }
-                    if (isCombine) {
-                        teams.remove(teamIndex);    //剔除合并过的team
+
+                    //新来的集合是否和原来的集合有染个数等于2，有染只能1个或者2个
+                    if (indexList.size() == 2) {
+                        List<Integer> integers = teams.get(indexList.get(0));
+                        integers.addAll(teams.get(indexList.get(1)));
+                        teams.remove(indexList.get(1));
                     }
+
+
                     if (!hasTeam) {   //a和b都没有team，则新建team加入teams的集合中
-                        List<Integer> team = new ArrayList<>();
-                        team.add(a);
-                        team.add(b);
                         teams.add(team);
                     }
                 } else {

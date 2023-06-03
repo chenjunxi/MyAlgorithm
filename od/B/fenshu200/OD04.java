@@ -3,7 +3,14 @@ package com.od.B.fenshu200;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Scanner;
+/*
+* 报文压缩
+3[m2[c]]
+mccmccmcc
 
+数字的截取范围：数字到[
+字母截取范围：字母到数字或字母到]
+* */
 public class OD04 {
     public static void main(String[] args) {
 

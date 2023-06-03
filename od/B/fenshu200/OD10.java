@@ -1,10 +1,78 @@
 package com.od.B.fenshu200;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
+/*
+ *
+ * 岛屿感染问题
+22220
+00000
+00000
+11111
+-1
+ * */
 public class OD10 {
-    public static void main(String[] args) {
+    public static int N;
+    public static int M;
 
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        ArrayList<String> list = new ArrayList<>();
+        while (sc.hasNext()) {
+            String s = sc.nextLine();
+            if (s.equals("-1")) break;
+            list.add(s);
+        }
+
+        N = list.size();
+        M = list.get(0).length();
+
+        int[][] dp = new int[N][M];
+
+        for (int i = 0; i < N; i++) {
+            String s = list.get(i);
+            for (int j = 0; j < M; j++) {
+                dp[i][j] = s.charAt(j) - '0';
+
+            }
+
+        }
+
+        int max = 0;
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < M; j++) {
+                if (dp[i][j] != 0) {
+                    int count = dfs(dp, i, j);
+                    max = Math.max(max, count);
+                }
+
+            }
+        }
+
+        System.out.println(max);
+
+
+    }
+
+    private static int dfs(int[][] dp, int i, int j) {
+        if (i < 0 || j < 0 || i >=N || j >=M || dp[i][j] == 0) {
+            return 0;
+        }
+
+
+        int temp = dp[i][j];
+        dp[i][j] = 0;
+
+        temp += dfs(dp, i - 1, j);
+        temp += dfs(dp, i + 1, j);
+        temp += dfs(dp, i, j - 1);
+        temp += dfs(dp, i, j + 1);
+
+        return temp;
+    }
+
+    private static void demo() {
         Scanner sc = new Scanner(System.in);
         int[][] map = new int[300][300];
 

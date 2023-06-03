@@ -4,6 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/*
+* 星球改造计划
+* 一个太阳日可以通过YES向四周扩散把NO变成YES，NA无法改变
+YES YES NO
+NO NO NO
+YES NO NO
+
+思路需要一个复制需要两个太阳日regionsCopy，并记录下一批待改造的坐标，NO数量减去坐标数量，一直NO数量为0或者坐标数量为0
+如果NO的数据量不能清零表示无法改造完成。
+
+* */
 public class OD01 {
     //行
     public static int row;
@@ -57,6 +68,7 @@ public class OD01 {
                     if (regions[i][j].equals("YES")) {
                         gaizao(i, j);
                     }
+                    regions[i][j] = "yes";
                 }
             }
 

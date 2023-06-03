@@ -1,9 +1,24 @@
 package com.od.B.fenshu200;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
+/*
+* 字符串比较
+求两个字符串的最大连续子串长度
+|A[i]-B[i]|之和小于等于给定的值
+xxcdefg
+cdefghi
+5
+输出2
+xxaaabbb
+cdbbdaaa
+
+思路遍历AB字符串，同位置比较
+小于给定值，就添加为子串。
+* */
 public class OD05 {
     public static void main(String[] args) {
 
@@ -13,7 +28,39 @@ public class OD05 {
         String s2 = scanner.nextLine();
 
         int n = scanner.nextInt();
+        int len = s1.length();
 
+
+        //遍历两个字符串，把差值存放在数组中
+        int[] ints = new int[len];
+        for (int i = 0; i < len; i++) {
+            char a = s1.charAt(i);
+            char b = s2.charAt(i);
+            ints[i] = Math.abs(a - b);
+        }
+
+
+        //剩下的事就是求数组中最长连续子串之和小于等于n
+        int max = -1;
+        for (int i = 0; i < ints.length; i++) {
+            if (ints[i] >= n) continue;
+            int temp = ints[i];
+            for (int j = i + 1; j < ints.length; j++) {
+                temp += ints[j];
+                if (temp <= n) {
+                    max = Math.max(j - i + 1, max);
+                } else {
+                    break;
+                }
+            }
+        }
+
+        System.out.println(Arrays.toString(ints));
+        System.out.println(max);
+
+    }
+
+    private static void demo(String s1, String s2, int n) {
         int max = 0;
         int length = 0;
         List<Integer> list = new ArrayList<>();     //用列表存放符合要求的数

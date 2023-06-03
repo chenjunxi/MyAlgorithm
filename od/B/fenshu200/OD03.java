@@ -1,16 +1,87 @@
 package com.od.B.fenshu200;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
+/*
 
+a1-a2,a5-a6,a2-a3
+a5,a2
+
+思路：把被依赖的服务作为map的key，所依赖的list作为value，value的服务就是所求失败的。
+* */
 public class OD03 {
     public static List<String[]> list = new ArrayList<>();    //依赖关系集合
     public static List<String> errorSer = new ArrayList<>();   //故障集合
 
     public static void main(String[] args) {
 
+        Scanner sc = new Scanner(System.in);
+
+        String[] strings = sc.nextLine().split(",");
+        String[] guzhang = sc.nextLine().split(",");
+        HashMap<String, ArrayList<String>> map = new HashMap<>();
+        ArrayList<String> listL = new ArrayList<>();
+        ArrayList<String> errorL = new ArrayList<>();
+
+        for (String s : guzhang) {
+            errorL.add(s);
+        }
+
+        for (int i = 0; i < strings.length; i++) {
+            String[] temp = strings[i].split("-");
+            String a = temp[0];
+            String b = temp[1];
+            listL.add(a);
+            listL.add(b);
+
+            if (map.containsKey(b)) {
+                ArrayList<String> strings1 = map.get(b);
+                strings1.add(a);
+                map.put(b, strings1);
+            } else {
+                ArrayList<String> temp1 = new ArrayList<>();
+                temp1.add(a);
+                map.put(b, temp1);
+            }
+
+        }
+
+        while (true) {
+
+            Iterator<Map.Entry<String, ArrayList<String>>> it = map.entrySet().iterator();
+
+            boolean flag = false;
+            while (it.hasNext()) {
+                Map.Entry<String, ArrayList<String>> next = it.next();
+                if (errorL.contains(next.getKey())) {
+                    errorL.addAll(map.get(next.getKey()));
+                    it.remove();
+                    flag = true;
+                }
+            }
+
+            if (!flag) {
+                break;
+            }
+
+        }
+
+
+        String res = "";
+        boolean flag = false;
+        for (String s : listL) {
+            if (!errorL.contains(s)) {
+                res += s + ",";
+                flag = true;
+            }
+        }
+
+        System.out.println(flag ? res.substring(0, res.length() - 1) : ",");
+
+
+    }
+
+
+    private static void demo() {
         Scanner sc = new Scanner(System.in);
 
         String[] strings = sc.nextLine().split(",");
