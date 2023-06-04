@@ -4,6 +4,25 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/*  逻辑技巧，需要背
+* 座位调整
+1,0,0,0,1
+输出1
+
+
+思路：统计遇到1之前有多少个0(不包含1附近的0),通过0的个数计算座位=Math.ceil(count/2)
+分多种情况：
+没有1的情况：这种最好计算之间就是=Math.ceil(count/2)
+有1的情况：遇到1的时候0的数量都要置为0
+                if (isFirst && count > 1) {
+                    //如果是第一个1，且前面的0大于1，则除了1的左侧外都可以坐人
+                    list.add(count - 1);
+                } else if (count > 2) {
+                    //因为前面1的右侧和后面1的左侧无法坐人
+                    list.add(count - 2);
+                }
+最核心就是统计0的数量来确定位置数量
+* */
 public class OD09 {
     public static void main(String[] args) {
 

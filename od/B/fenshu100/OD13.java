@@ -1,109 +1,98 @@
 package com.od.B.fenshu100;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Scanner;
+import java.lang.reflect.Array;
+import java.util.*;
 
+/*
+* 斗地主顺子
+顺子不包含2,输入不会存在大小王
+如果有多个顺子，按第一张牌的大小升序
+
+2 9 J 10 3 4 K A 7 Q A 5 6
+
+输出
+3 4 5 6 7
+9 10 J Q K A
+
+
+思路：J Q K A 转成 对应数字 11 12 13 14
+把牌转成状态数组：[0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 2]
+剩下的事就是双循环遍历连续不为0的数字了
+
+
+* */
 public class OD13 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        String[] s = sc.nextLine().split(" ");
+        String[] s = sc.nextLine()
+                .replaceAll("J", "11")
+                .replaceAll("Q", "12")
+                .replaceAll("K", "13")
+                .replaceAll("A", "14")
+                .split(" ");
 
         int len = s.length;
-        List<Integer> list = new ArrayList<>();
 
-        for (int i = 0; i < len; i++) { //提出2，转化A,J,Q,K
-            switch (s[i]) {
-                case "J":
-                    list.add(11);
+
+        int[] nums = Arrays.stream(s).mapToInt(Integer::parseInt).toArray();
+
+
+        int[] ints = new int[15];
+
+        for (int i = 0; i < nums.length; i++) {
+            ints[nums[i]]++;
+        }
+
+        ArrayList<ArrayList<Integer>> list1 = new ArrayList<>();
+        for (int i = 3; i < ints.length; i++) {
+            if (ints[i] == 0) continue;
+            int count = 0;
+            ArrayList<Integer> temp = new ArrayList<>();
+
+            temp.add(i);
+            for (int j = i + 1; j < ints.length; j++) {
+
+                if (ints[j] == 0) {
+                    count = j - i;
+                    i = j;
                     break;
-                case "Q":
-                    list.add(12);
+                } else if (j == ints.length - 1) {
+                    count = j - i + 1;
+                    i = j;
+                    temp.add(j);
                     break;
-                case "K":
-                    list.add(13);
-                    break;
-                case "A":
-                    list.add(14);
-                    break;
-                case "2":
-                    break;
-                default:
-                    list.add(Integer.valueOf(s[i]));
+                } else {
+                    temp.add(j);
+                }
+            }
+            if (count >= 5) {
+                list1.add(temp);
             }
         }
 
-        Collections.sort(list); //从小到大排序方便取值2 9 J 10 2 3 4 K A 7 Q A 5 6
-
-        List<List<Integer>> ress = new ArrayList<>();
-
-        boolean isA = false; //是否遍历完整个数组
-
-        while (!isA) {
-            List<Integer> res = new ArrayList<>();
-            res.add(list.get(0));   //放入第一个数字
-            int count = 1;
-            for (int i = 1; i < list.size(); i++) {
-                int x = list.get(i);    //  本次数字
-                if (x == list.get(i - 1) + 1) { //符合严格递增
-                    count++;
-                    res.add(x);
-                } else if (x == list.get(i - 1) && i != list.size() - 1) {
-                    continue;   //本次数字等于前面一个数字且不是数组最后一位,则进入下次循环
-                }
-                if (x != list.get(i - 1) + 1 || i == list.size() - 1) {
-                    if (count >= 5) {   //符合顺子
-                        ress.add(res);
-                    } else if (i == list.size() - 1) {   //整个数组遍历完全，直接退出
-                        isA = true;
-                        break;
-                    }
-                    for (int j = 0; j < res.size(); j++) {
-                        for (int k = 0; k < list.size(); k++) {
-                            if (res.get(j) == list.get(k)) {
-                                list.remove(k); //剔除已经处理过的数字
-                                break;
-                            }
-                        }
-                    }
-                    if (list.size() < 5) {  //集合剩余数字不满足成为顺子
-                        isA = true;
-                    }
-                    break;  //顺子已经提取，跳出本次循环
-                }
-            }
-        }
-
-        if (ress.size() == 0) {
-            System.out.println("No");
+        if (list1.size() == 0) {
+            System.out.println("NO");
         } else {
-            for (int i = 0; i < ress.size(); i++) {
-                String stringRes = "";
-                for (int j = 0; j < ress.get(i).size(); j++) {
-                    switch (ress.get(i).get(j)) {    //将A\J\Q\K还原
-                        case 11:
-                            stringRes += "J";
-                            break;
-                        case 12:
-                            stringRes += "Q";
-                            break;
-                        case 13:
-                            stringRes += "K";
-                            break;
-                        case 14:
-                            stringRes += "A";
-                            break;
-                        default:
-                            stringRes += ress.get(i).get(j);
-                    }
-                    if (j < ress.get(i).size() - 1) {
-                        stringRes += " ";
-                    }
+            for (ArrayList<Integer> list : list1) {
+                String res = "";
+                for (int i = 0; i < list.size(); i++) {
+                    Integer integer = list.get(i);
+
+                    res += integer + " ";
                 }
-                System.out.println(stringRes);
+
+                String ans = res.substring(0, res.length() - 1)
+                        .replaceAll("11", "J")
+                        .replaceAll("12", "Q")
+                        .replaceAll("13", "K")
+                        .replaceAll("14", "A");
+                System.out.println(ans);
+
             }
         }
+
     }
+
+
 }

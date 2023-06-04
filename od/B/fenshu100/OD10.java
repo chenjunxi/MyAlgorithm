@@ -5,6 +5,19 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
+/*
+* 统计路灯照明问题  又是逻辑题 要记一下
+N个路灯，路灯之间距离为100米
+每个路灯都有之间的照明半径，求第一栈灯到最后一盏，无法照明的长度和
+2
+50 50
+输出：0 没有没覆盖的长度
+思路：把有并集的路灯合并成一个大路灯，如果有路灯左边大于这个路灯右边，说明就是没交集。
+没交集的路灯都存放在list中，计算没覆盖的长度就是后面的左减去前面路灯的右
+
+
+主要思路就是：把每个灯的照明范围转成区间，区间排序，然后合并。不能合并的存放在list中，就可以计算无法照明的距离
+* */
 public class OD10 {
     public static void main(String[] args) {
 
@@ -13,6 +26,11 @@ public class OD10 {
         int n = sc.nextInt();
         sc.nextLine();
         String[] str = sc.nextLine().split(" ");
+
+        if (n == 1) {
+            System.out.println(0);
+            return;
+        }
 
         List<Node> list = new ArrayList<>();
 

@@ -3,7 +3,25 @@ package com.od.B.EX;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
+/*
+5
+1 0 0 2 2
+2 6 1 8 3
+3 3 2 5 4
+5 5 4 7 6
+4 0 4 2 6
 
+输出
+1 2 3 4 5
+
+首先定义一个灯类，包含编号，x=(x1+x2)/2,y=(y1+y2)/2,r=(x2-x1)/2 半径
+存放在一个list中，按高低排序，y越低越高，所以list排序的时候自定义按照y进行升序排序
+取一个元素，即是最高的等作为基准，遍历后面的灯
+判断第二个灯和基准灯的高度差(y2-y1)<=r1,如果成立，就是统一行的灯，然后横坐标升序排序。
+依次类推下去
+
+
+* */
 public class ODB18 {
     static class Light {
         int id;

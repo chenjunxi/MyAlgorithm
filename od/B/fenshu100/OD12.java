@@ -5,6 +5,24 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
+/*
+* 分班
+
+1/N 2/Y 3/N 4/Y
+1 2
+3 4
+
+Y表示和前面的同一个班
+输出要求：拥有编号最小的班级先输出，没人的班级输出空行
+
+
+思路：flag=true Y表示同一个班；flag=false Y表示不同一个班
+
+用两个list分表表示两个班级
+设定开始flag=true，第一个学生分配给一班，遇到不同班的时候才修改flag状态。
+
+
+* */
 public class OD12 {
     public static void main(String[] args) {
 
@@ -20,17 +38,9 @@ public class OD12 {
 
         for (int i = 0; i < strings.length; i++) {
             String[] x = strings[i].split("/");
-            if (!Character.isDigit(x[0].charAt(0))) {    //第一个非数字
-                isError = true;
-                break;
-            }
+
             Integer stu = Integer.valueOf(x[0]);
-            if ((!x[1].equals("N") && !x[1].equals("Y"))
-                    || list1.contains(stu)
-                    || list2.contains(stu)) {
-                isError = true;
-                break;
-            }
+
             if (list1.size() == 0) {    //第一位直接安排一班
                 list1.add(stu);
                 continue;

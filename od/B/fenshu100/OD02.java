@@ -1,7 +1,25 @@
 package com.od.B.fenshu100;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
+/*
+求任意两个数围成的最大面积
+10,1,2,3,4,5,10
+输出60
+10,9,8,7,6,5,4,3,2,1
+输出25
+
+暴力双层遍历 感觉会超时
+ for (int i = 0; i < length; i++) {
+      for (int j = i + 1; j < length; j++) {
+          int i1 = (j - i) * Math.min(num[i], num[j]);
+          max = Math.max(max, i1);
+     }
+ }
+
+
+* */
 public class OD02 {
 
     public static void main(String[] args) {
@@ -12,23 +30,20 @@ public class OD02 {
 
         String[] ss = s.split(",");
 
-        int[] num = new int[ss.length];   //将输入放入整数数组中
+        int length = ss.length;
 
-        for (int m = 0; m < ss.length; m++) {
+        int[] num = new int[length];   //将输入放入整数数组中
+
+        for (int m = 0; m < length; m++) {
             num[m] = Integer.parseInt(ss[m]);
         }
 
-        int max = 0;    //最大面积
 
-        for (int n = 1; n < num.length; n++) {
-            int min = num[n]; //假设当前挡板为最小挡板
-            int temp = n - 1; //前一个挡板下标
-            for (int i = 1; i <= n; i++) {
-                /**
-                 * 循环计算当前挡板到前面i个挡板的面积并求出最大值
-                 */
-                min = Math.min(min, num[temp--]);   //min 求出前挡板到前面i个挡板最小高度
-                max = Math.max(min * i, max);  //min*i 求出前挡板到前面i个挡板的面积
+        int max = 0;    //最大面积
+        for (int i = 0; i < length; i++) {
+            for (int j = i + 1; j < length; j++) {
+                int i1 = (j - i) * Math.min(num[i], num[j]);
+                max = Math.max(max, i1);
             }
         }
 

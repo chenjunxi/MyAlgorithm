@@ -2,7 +2,25 @@ package com.od.B.EX;
 
 import java.util.*;
 import java.util.stream.Collectors;
+/*
+* 文件目录大小 dfs
+目录id 目录大小 子目录集
+3 1     查找目录1，求目录1大小+下面的子目录大小之和
+3 15 (0)
+1 20 (2)
+2 10 (3)
 
+输出 45
+
+思路，两个map，目录id做key，value分别存大小和子目录集
+
+while循环dfs
+把要求的目录放在一个栈中，栈初始化就是要查的目录，然后不断往stack添加子目录，不断累加。
+当栈大小为空就是循环结束
+
+注意不存在map中的目录，不添加入栈中
+
+* */
 public class ODB23 {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);

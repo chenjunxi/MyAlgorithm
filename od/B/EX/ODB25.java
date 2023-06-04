@@ -3,6 +3,25 @@ package com.od.B.EX;
 
 import java.util.*;
 
+/*
+* 两个整数数组出现的相同数字 简单题
+两个数组不存在共同数字，输出NULL
+如果有输出格式
+次数:num1,num2,num3……
+次数2:num3,num4,num5……
+
+出现次数升序，数字也升序。。无语题，花里胡哨的格式
+5,8,11,3,6,8,8,-1,11,2,11,11
+11,2,11,8,6,8,8,-1,8,15,3,-9,11
+输出
+1:-1,2,3,6
+3:8,11
+
+思路：同时出现，那不就是两个集合的交集？再统计交集中的元素出现的次数
+两个数组分别用map统计数字出现的次数
+再循环遍历两个map，得到交集的元素和出现次数，然后用第三个map存放，次时map的key为出现的次数，value使用treeSet
+再自定义排序……输出
+* */
 public class ODB25 {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
@@ -34,15 +53,22 @@ public class ODB25 {
             return;
         }
 
-        same_num_map.keySet().stream().sorted().forEach(
-                count -> {
-                    StringJoiner sj = new StringJoiner(",", count + ":", "");
-                    for (Integer num : same_num_map.get(count)) {
-                        sj.add(num + "");
-                    }
-                    System.out.println(sj.toString());
-                });
-        return;
+        ArrayList<Map.Entry<Integer, TreeSet<Integer>>> entries = new ArrayList<>(same_num_map.entrySet());
+
+        entries.sort((a, b) -> {
+            return a.getKey() - b.getKey();
+        });
+
+        for (Map.Entry<Integer, TreeSet<Integer>> m : entries) {
+
+            String res = "";
+            System.out.print(m.getKey() + ":");
+            for (int i : m.getValue()) {
+                res += i + ",";
+            }
+            System.out.println(res.substring(0, res.length() - 1));
+        }
+
     }
 
 }

@@ -1,7 +1,31 @@
 package com.od.B.fenshu100;
 
+import scala.xml.Null;
+
 import java.util.*;
 
+/*
+* 选修课 题目又长又臭，诸多要求
+要求很简单找出同时修两门选修课的同学，麻烦地方是输出。重点考排序比较，千万别犯字符串数字比较
+
+输出要求：首先输出班级编号较小的班级编号，第二行就是这个班级同时修2门选修课的学号，按成绩降序，成绩相同就按学号升序……
+输入：
+
+01202021,75;01201033,95;01202008,80;01203006,90;01203088,100
+01202008,70;01203088,85;01202111,80;01202021,75;01201100,88
+输出：
+01202
+01202008;01202021
+01203
+01203088
+
+思路:使用map记录，学号作为key，list存放成绩，list大小=2就是修了2门课。
+
+再使用treemap存放修了两门课的同学，班级编号作为key，value是一个list存放同学的数组{成绩，学生ID}
+
+遍历treemap，就行了。自定义同一个班级同学的排序输出
+
+* */
 public class OD07 {
     public static void main(String[] args) {
 
@@ -10,88 +34,93 @@ public class OD07 {
         String[] one = sc.nextLine().split(";");
         String[] two = sc.nextLine().split(";");
 
-        Map<String, List<Student>> map = new HashMap<>();
-        for (int i = 0; i < one.length; i++) {
 
-            String[] oneStu = one[i].split(",");
-            //学生学号
-            String oneStuId = oneStu[0];
+        HashMap<String, ArrayList<Integer>> map = new HashMap<>();
+        getMap(one, map);
+        getMap(two, map);
+        TreeMap<Integer, ArrayList<String[]>> res = new TreeMap<>();
 
-            for (int j = 0; j < two.length; j++) {
 
-                String[] twoStu = two[j].split(",");
-                //学生学号
-                String twoStuId = twoStu[0];
+        for (Map.Entry<String, ArrayList<Integer>> m : map.entrySet()) {
+            ArrayList<Integer> list = m.getValue();
+            if (list.size() == 2) {
+                int sorce = 0;
+                for (int i : list) {
+                    sorce += i;
+                }
 
-                if (oneStuId.equals(twoStuId)) {
 
-                    int oneStuScore = Integer.parseInt(oneStu[1]);
-                    int twoStuScore = Integer.parseInt(twoStu[1]);
-                    //总成绩
-                    int totalScore = oneStuScore + twoStuScore;
-                    //班级编号
-                    String cla = twoStuId.substring(0, 5);
-                    //学生信息
-                    Student student = new Student(oneStuId, totalScore);
-                    if (map.containsKey(cla)) {
-                        map.get(cla).add(student);
-                    } else {
-                        List<Student> list = new ArrayList<>();
-                        list.add(student);
-                        map.put(cla, list);
-                    }
+                String key = m.getKey();
+                int classnum = Integer.valueOf(key.substring(0, 5));
+                String[] ints = {String.valueOf(sorce), key};
+
+
+                if (res.containsKey(classnum)) {
+                    ArrayList<String[]> ints1 = res.get(classnum);
+                    ints1.add(ints);
+                    res.put(classnum, ints1);
+                } else {
+                    ArrayList<String[]> list1 = new ArrayList<>();
+                    list1.add(ints);
+                    res.put(classnum, list1);
                 }
             }
         }
 
-        if (map.size() == 0) {
-            //没有符合要求的
+        if (res.size() == 0) {
             System.out.println("NULL");
-        } else {
-            List<Map.Entry<String, List<Student>>> mapList = new ArrayList<>(map.entrySet());
-            mapList.sort((a, b) -> {
-                if (a.getKey().compareTo(b.getKey()) < 0) {
-                    return -1;
-                }
-                return 1;
+            return;
+        }
+
+        for (Map.Entry<Integer, ArrayList<String[]>> m : res.entrySet()) {
+
+            ArrayList<String[]> list = m.getValue();
+            System.out.println(list.get(0)[1].substring(0, 5));
+
+            //定义排序
+            list.sort((a, b) -> {
+                Integer s1 = Integer.valueOf(a[0]);
+                Integer s2 = Integer.valueOf(b[0]);
+                Integer num1 = Integer.valueOf(a[1].substring(5));
+                Integer num2 = Integer.valueOf(b[1].substring(5));
+                if (s1 != s2) return s2 - s1;
+                return num1 - num2;
+
             });
-
-            for (Map.Entry<String, List<Student>> m : mapList) {
-                //输出班级编号
-                System.out.println(m.getKey());
-                String res = "";
-                //对学生按照要求排序
-                Collections.sort(m.getValue());
-                for (Student s : m.getValue()) {
-                    res += s.stuId + ";";
+            for (int i = 0; i < list.size(); i++) {
+                if (i == list.size() - 1) {
+                    System.out.print(list.get(i)[1]);
+                } else {
+                    System.out.print(list.get(i)[1] + ";");
                 }
-                System.out.println(res.substring(0, res.length() - 1));
+
             }
+            System.out.println();
+
         }
 
     }
 
-    static class Student implements Comparable<Student> {
+    private static void getMap(String[] arr, HashMap<String, ArrayList<Integer>> map) {
+        for (int i = 0; i < arr.length; i++) {
 
-        String stuId;
-        int score;
+            String s = arr[i];
+            String[] split = s.split(",");
 
-        public Student(String stuId, int score) {
-            this.stuId = stuId;
-            this.score = score;
-        }
+            String key = split[0];
+            Integer cj = Integer.valueOf(split[1]);
 
-        @Override
-        public int compareTo(Student o) {
-            if (this.score > o.score) {
-                return -1;
-            } else if (this.score == o.score) {
-                if (this.stuId.compareTo(o.stuId) > 0) {
-                    return 1;
-                }
-                return -1;
+            if (map.containsKey(key)) {
+                ArrayList<Integer> list = map.get(key);
+                list.add(cj);
+                map.put(key, list);
+
+            } else {
+                ArrayList<Integer> list = new ArrayList<>();
+                list.add(cj);
+                map.put(key, list);
             }
-            return 1;
         }
     }
+
 }

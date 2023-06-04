@@ -4,6 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/*
+ * 分糖果 这道题重点在数字范围  思路：递归方法
+求至少多少次，能将手中的糖果分至成一颗
+15
+输出5
+15+1=16
+16/2=8
+8/2=4
+4/2=2
+2/2=1
+9900000000
+41
+
+
+ * */
 public class OD03 {
     public static List<Integer> list = new ArrayList<>();
 
@@ -11,34 +26,24 @@ public class OD03 {
 
         Scanner sc = new Scanner(System.in);
 
-        int n = sc.nextInt();
+        long n = sc.nextLong();
 
-        fentangguo(n, 0);
+        int allocate = allocate(n);
+        System.out.println(allocate);
 
-        list.sort((a, b) -> {  //从小到大排序
-            if (b > a) {
-                return -1;
-            }
-            return 1;
-        });
-
-        System.out.println(list.get(0));
     }
 
-    public static int fentangguo(int n, int m) {
-
-        if (n == 1) {
-            list.add(m);    //分糖完毕
+    private static int allocate(long num) {
+        if (num == 2) {
             return 1;
         }
-        if (n % 2 == 0) {
-            m++;
-            fentangguo(n / 2, m);
+        if (num % 2 == 0) {
+            return allocate(num / 2) + 1;
+        } else if (num == 3 || num % 4 == 1) { //减一优先执行，因为减一会更少操作
+            return allocate(num - 1) + 1;
         } else {
-            m++;
-            fentangguo(n - 1, m);
-            fentangguo(n + 1, m);
+            return allocate(num + 1) + 1;
         }
-        return 0;
     }
+
 }

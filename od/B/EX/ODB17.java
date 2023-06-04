@@ -3,9 +3,32 @@ package com.od.B.EX;
 import java.util.Arrays;
 import java.util.Scanner;
 
+/*
+矩阵稀疏 送分题啊，题目意思恶心人，实际很简单
+
+
+每行或列中出现0个数大于等于一半，就认为行稀疏
+找出矩阵稀疏行和稀疏列的个数
+3 3
+1 0 0
+0 1 0
+0 0 1
+输出
+3
+3
+
+5 3
+-1 0 1
+0 0 0
+-1 0 0
+0 -1 0
+0 0 0
+
+思路 用两个数组分别记下每行或列出现0的个数
+* */
 public class ODB17 {
     public static void main(String[] args) {
-        Scanner in= new Scanner(System.in);
+        Scanner in = new Scanner(System.in);
 
         int m = in.nextInt();
         int n = in.nextInt();

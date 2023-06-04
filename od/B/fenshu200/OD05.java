@@ -11,13 +11,13 @@ import java.util.Scanner;
 |A[i]-B[i]|之和小于等于给定的值
 xxcdefg
 cdefghi
-5
+5  M
 输出2
 xxaaabbb
 cdbbdaaa
 
 思路遍历AB字符串，同位置比较
-小于给定值，就添加为子串。
+将同位置的差值存放数组中，剩下的事就是寻找最长连续和小于等于M
 * */
 public class OD05 {
     public static void main(String[] args) {

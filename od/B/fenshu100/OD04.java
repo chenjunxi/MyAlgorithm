@@ -1,7 +1,10 @@
 package com.od.B.fenshu100;
 
 import java.util.Scanner;
-
+/*
+* 排序 送分题 拼接比较，局部最大全局一定是最大的。
+*
+* */
 public class OD04 {
     public static void main(String[] args) {
 

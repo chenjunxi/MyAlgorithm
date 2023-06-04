@@ -4,9 +4,65 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/*
+敏感字段加密  逻辑题，点睛之笔是判断是否在""内， falg = !falg;
+
+命令以一个或多个_分割，如果命令中包含_,会用""标识,空命令也用""
+1
+password__a12345678_time_100
+输出：password_******_time_100
+
+1
+password__a12345678_"a12_454_67"_time_100
+输出：password_******_"a12_454_67"_time_100
+
+字符串以_分割一共有4个命令，题目指出下标为1(0开始)的名字进行加密，也就是a12345678
+
+思路：首先把""内的_替换为#，然后分割_,指定索引字符串变成******，然后那#改为_,输出
+* */
 public class OD05 {
     public static void main(String[] args) {
 
+        Scanner sc = new Scanner(System.in);
+        int idnex = sc.nextInt();
+        sc.nextLine();
+        String line = sc.nextLine();
+
+        boolean falg = false;
+        char[] chars = line.toCharArray();
+        for (int i = 0; i < line.length(); i++) {
+
+            char c = line.charAt(i);
+            if (c == '\"') {
+                falg = !falg;
+            }
+
+            if (falg && c == '_') {
+                chars[i] = '#';
+            }
+
+        }
+
+        String s = String.valueOf(chars);
+        String[] split = s.split("_+");
+        String res = "";
+
+        boolean isFlag = false;
+        for (int i = 0; i < split.length; i++) {
+
+            if (i == idnex) {
+                res += "******_";
+                isFlag = true;
+                continue;
+            }
+            res += split[i].replaceAll("#", "_") + "_";
+
+        }
+        System.out.println(isFlag ? res.substring(0, res.length() - 1) : "ERROR");
+
+    }
+
+    private static void demo() {
         Scanner sc = new Scanner(System.in);
 
         int n = sc.nextInt();
@@ -26,6 +82,7 @@ public class OD05 {
                 if (i == len - 1) {
                     list.add(temp); //最后一位直接push
                 }
+
             } else {
                 if (temp == "") {
                     continue;   //字符串为空则进入下个循环
