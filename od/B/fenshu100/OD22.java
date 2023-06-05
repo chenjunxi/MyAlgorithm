@@ -1,7 +1,11 @@
 package com.od.B.fenshu100;
 
 import java.util.Scanner;
-
+/*
+找终点题
+看题逻辑题
+7 5 9 4 2 6 8 3 5 4 3 9
+* */
 public class OD22 {
 
     public static void main(String[] args) {
@@ -21,7 +25,7 @@ public class OD22 {
         int step = 0;   //步数的进度（数组下标）
         int count = 0;  //步数
         int x = Integer.MAX_VALUE;
-        for (int i = 0; i < ints.length / 2 - 1; i++) { //从第一个元素开始，第一步<length/2(下标为0，所以要减一)
+        for (int i = 1; i < ints.length / 2 ; i++) { //从第一个元素开始，第一步<length/2(下标为0，所以要减一)
             step = i;
             count = 1;
             while (step < ints.length - 1) {  //没有走完就需要继续

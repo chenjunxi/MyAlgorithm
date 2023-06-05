@@ -1,7 +1,11 @@
 package com.od.B.fenshu100;
 
 import java.util.Scanner;
+/*
+IP转整数
+count += n << (8 * (3 - i))
 
+* */
 public class OD15 {
     public static void main(String[] args) {
 

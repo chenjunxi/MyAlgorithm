@@ -2,6 +2,12 @@ package com.od.B.fenshu100;
 
 import java.util.Scanner;
 
+/*
+ *
+ * 报文响应时间
+ *
+ * 看题逻辑题
+ * */
 public class OD17 {
     public static void main(String[] args) {
 

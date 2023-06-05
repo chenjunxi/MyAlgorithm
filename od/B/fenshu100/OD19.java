@@ -1,7 +1,10 @@
 package com.od.B.fenshu100;
 
 import java.util.Scanner;
-
+/*
+* 数列描述
+*
+* */
 public class OD19 {
     public static void main(String[] args) {
 

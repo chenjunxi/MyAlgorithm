@@ -2,6 +2,18 @@ package com.od.B.fenshu100;
 
 import java.util.*;
 
+/*
+* 字符串摘要
+使用map记录字母的数量，每次遍历都要更新map对应value值
+bAaAcBb
+a3b2b2c0
+bAaAcBc
+
+思路:
+使用map记录字母的数量，每次遍历都要更新map对应value值
+list 存放Letter类，然后单独最最后一个元素处理
+然后自定义排序
+* */
 public class OD16 {
     public static void main(String[] args) {
 
@@ -11,72 +23,57 @@ public class OD16 {
 
         //因为题目要求先去除非字母的符号
         String newStr = "";
+        HashMap<Character, Integer> map = new HashMap<>();
         for (int i = 0; i < string.length(); i++) {
             char c = string.charAt(i);
             if (Character.isLetter(c)) {
-                newStr += c;
+                newStr += Character.toLowerCase(c);
+                map.put(Character.toLowerCase(c), map.getOrDefault(Character.toLowerCase(c), 0) + 1);
             }
         }
 
-        int len = newStr.length();
-        //连续字符的个数
-        int total = 1;
-        //最后一个字符
-        char temp = Character.toLowerCase(newStr.charAt(len - 1));
-        //字符的集合
-        List<Letter> list = new ArrayList<>();
-        /**
-         * key：字符
-         * value：字符出现的次数
-         */
-        Map<Character, Integer> map = new HashMap<>();
-        for (int i = len - 2; i >= 0; i--) {
-            //当前字符转换成小写
-            char c = Character.toLowerCase(newStr.charAt(i));
-            if (temp == c) {
-                //相同字符串
-                total++;
-            } else {
-
-                if (total == 1) {
-                    //字符只有一个，说明是非连续的
-                    //后面又这个字符则需要统计其次数（因为自己不算，所以需要-1）
-                    total += map.getOrDefault(temp, 0) - 1;
-                    map.put(temp, total + 1);
-                } else {
-                    //连续字符
-                    map.put(temp, total);
+        ArrayList<Letter> list = new ArrayList<>();
+        for (int i = 0; i < newStr.length() - 1; i++) {
+            char cur = newStr.charAt(i);
+            char next = newStr.charAt(i + 1);
+            if (cur != next) {
+                Integer count = map.get(cur);
+                list.add(new Letter(cur, count - 1));
+                map.put(cur, count - 1);
+            } else {//连续相同字母的时候
+                int j = i + 1;
+                while (j < newStr.length()) {
+                    if (cur != newStr.charAt(j) || j == newStr.length() - 1) {
+                        break;
+                    }
+                    j++;
                 }
-
-                Letter letter = new Letter(temp, total);
-                list.add(letter);
-                temp = c;
-                total = 1;
-
+                list.add(new Letter(cur, j - i));
+                map.put(cur, map.get(cur) - (j - i));
+                i = j - 1; //指针跳跃,防止重复计算
             }
-            //第一个字符需要另外处理
-            if (i == 0) {
-                if (total == 1) {
-                    total += map.getOrDefault(temp, 0) - 1;
-                }
-                Letter letter = new Letter(temp, total);
-                list.add(letter);
-            }
+
         }
 
+        //单独处理最后一个元素
+        Letter letter = list.get(list.size() - 1);
+        char c = newStr.charAt(newStr.length() - 1);
+        if (letter.name == c) {
+            list.set(list.size() - 1, new Letter(c, letter.total + 1));
+        } else {
+            list.add(new Letter(c, 0));
+        }
+
+        //自定义排序
         list.sort((a, b) -> {
-            if (a.total == b.total) {
-                return a.name - b.name;
-            }
-            return b.total - a.total;
+
+            if (a.total != b.total) return b.total - a.total;
+            return a.name - b.name;
         });
 
-        String res = "";
-        for (Letter letter : list) {
-            res += String.valueOf(letter.name) + letter.total;
+        for (Letter l : list) {
+            System.out.print(l.name + "" + l.total);
         }
-
-        System.out.println(res);
 
     }
 

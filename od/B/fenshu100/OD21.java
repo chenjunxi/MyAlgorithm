@@ -1,7 +1,10 @@
 package com.od.B.fenshu100;
 
 import java.util.*;
-
+/*
+*统计射击
+*map结构
+* */
 public class OD21 {
     public static void main(String[] args) {
 

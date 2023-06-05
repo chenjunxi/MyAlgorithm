@@ -4,6 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/*
+* 事件推送
+4 5 5
+1 5 5 10
+1 3 8 8 20
+
+
+思路：双循环，注意b数组的开始遍历位置
+* */
 public class OD18 {
     public static void main(String[] args) {
 
@@ -30,14 +39,13 @@ public class OD18 {
             int[] ints = new int[2];    //用来放置A、B数字
             int index = 0;  //B数组下标
 
-            while (index < b.length) {
-                if (a[i] <= b[index] && b[index] - a[i] <= R) {
-                    ints[0] = a[i];
-                    ints[1] = b[index];
-                    list.add(ints);
+            for (int j = index; j < b.length; j++) {
+
+                if (b[j] >= a[i] && b[j] - a[i] <= R) {
+                    list.add(new int[]{a[i], b[j]});
+                    index = j + 1;
                     break;
                 }
-                index++;
             }
         }
 

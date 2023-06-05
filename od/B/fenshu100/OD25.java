@@ -1,13 +1,77 @@
 package com.od.B.fenshu100;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
+/*
+*使用状态数组记录剩下牌的个数，然后遍历状态数组连续不为0的子数组，加入list中，然后排序出最大的顺子
+3-3-3-3-4-4-5-5-6-7-8-9-10-J-Q-K-A
+4-5-6-7-8-8-8
+
+
+* */
 public class OD25 {
     public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
 
+        String[] str1 = sc.nextLine()
+                .replaceAll("J", "11")
+                .replaceAll("Q", "12")
+                .replaceAll("K", "13")
+                .replaceAll("A", "14").split("-");
+        String[] str2 = sc.nextLine()
+                .replaceAll("J", "11")
+                .replaceAll("Q", "12")
+                .replaceAll("K", "13")
+                .replaceAll("A", "14").split("-");
+        int[] dp = new int[15];
+        Arrays.fill(dp, 4);
+
+        for (int i = 0; i < str1.length; i++) {
+            dp[Integer.valueOf(str1[i])]--;
+        }
+
+        for (int i = 0; i < str2.length; i++) {
+            dp[Integer.valueOf(str2[i])]--;
+        }
+
+        System.out.println(Arrays.toString(dp));
+
+        ArrayList<ArrayList<Integer>> list = new ArrayList<>();
+
+        for (int i = 3; i < dp.length; i++) {
+
+            if (dp[i] == 0) continue;
+
+            int index = i+1;
+
+            ArrayList<Integer> temp = new ArrayList<>();
+            temp.add(i);
+            while (index < dp.length) {
+
+                if (dp[index] == 0) {
+                    i = index;
+                    break;
+                } else if (index == dp.length - 1) {
+                    temp.add(index);
+                    i = index;
+
+                } else {
+                    temp.add(index);
+                }
+
+                index++;
+            }
+
+            if (temp.size() >= 5) {
+                list.add(temp);
+            }
+
+        }
+        System.out.println(list);
+
+    }
+
+    private static void demo() {
         Scanner sc = new Scanner(System.in);
 
         String[] str1 = sc.nextLine().split("-");
