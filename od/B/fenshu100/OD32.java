@@ -1,7 +1,13 @@
 package com.od.B.fenshu100;
 
 import java.util.Scanner;
+/*
+* 最长公共后缀
+["bbc","abc","c"]
+输出："c"
 
+思路：获取最短字符串，作为首个字符串遍历字符
+* */
 public class OD32 {
     public static void main(String[] args) {
 

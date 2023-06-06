@@ -4,7 +4,11 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
-
+/*
+*磁盘容量排序
+*
+* 逻辑题 加排序
+* */
 public class OD34 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);

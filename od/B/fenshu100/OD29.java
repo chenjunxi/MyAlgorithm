@@ -1,7 +1,11 @@
 package com.od.B.fenshu100;
 
 import java.util.*;
-
+/*
+* 成语接龙
+*
+* 简单题，利用map结构
+* */
 public class OD29 {
     public static void main(String[] args) {
 

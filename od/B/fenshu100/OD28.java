@@ -3,6 +3,19 @@ package com.od.B.fenshu100;
 import java.util.Arrays;
 import java.util.Scanner;
 
+/*
+* 五子棋
+* 求能使当前给出的颜色最大连续长度的下标
+1
+-1 0 1 1 1 0 1 0 1 -1 1
+输出5
+
+-1
+-1 0 1 1 1 0 1 0 1 -1 1
+输出1
+
+思路：求0的位置左右棋子的数量，哪个最多就填哪个
+* */
 public class OD28 {
     public static void main(String[] args) {
 

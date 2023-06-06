@@ -4,7 +4,23 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
+/*
+* 数组合并
+3  取长度
+2  2行数组
+2,5,6,7,9,5,7
+1,7,4,3,4
+3
+2
+2,5,6,7,9,5,7
+1,7,4,3,4
+
+输出：2,5,6,1,7,4,7,9,5,3,4,7
+
+while循环数组，index索引，index+=step；
+* */
 public class OD37 {
     public static void main(String[] args) {
 
@@ -15,12 +31,37 @@ public class OD37 {
         List<List<String>> lists = new ArrayList<>();
         sc.nextLine();
 
+        int count = 0;
         for (int i = 0; i < m; i++) {
             String[] strings = sc.nextLine().split(",");
-            lists.add(Arrays.asList(strings));  //将数组放入集合中
+            count += strings.length;
+            List<String> collect = Arrays.stream(strings).collect(Collectors.toList());
+            lists.add(collect);  //将数组放入集合中
         }
 
         List<Integer> res = new ArrayList<>();
+
+
+        int index = 0;
+        while (res.size() != count) {
+            for (int i = 0; i < lists.size(); i++) {
+                List<String> strings = lists.get(i);
+                if (index > strings.size()) continue;
+
+                int end = Math.min(step, strings.size() - index) + index;
+                for (int j = index; j < end; j++) {
+                    res.add(Integer.valueOf(strings.get(j)));
+                }
+
+            }
+            index += step;
+        }
+
+        System.out.println(res);
+
+    }
+
+    private static void demo(int step, int m, List<List<String>> lists, List<Integer> res) {
         int n = 0;  //起始下标
         int count = 0;  //取完数字的数组
         while (count < m) {    //当取完的数组数量小于m时进入循环
@@ -42,6 +83,5 @@ public class OD37 {
         }
 
         System.out.println(res);
-
     }
 }

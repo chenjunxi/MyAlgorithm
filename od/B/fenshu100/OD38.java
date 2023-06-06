@@ -2,6 +2,20 @@ package com.od.B.fenshu100;
 
 import java.util.Scanner;
 
+/*
+ * 相对开音节
+ *
+ 相对开音=辅音+元音(aeiou)+辅音(不含r)+e,如bike，cakeke这个算两个cake、keke
+
+ekam a ekac
+输出2
+
+思路：遍历每个字符串，长度小于4就continue
+判断字符串是否包含非字母，小技巧：String[] split = str.split("[a-zA-Z]") 数组大小为0就没包含其他字符
+4个长度截取字符串，判断是否是相对开音节
+ * */
+
+
 public class OD38 {
     public static void main(String[] args) {
 
@@ -14,18 +28,15 @@ public class OD38 {
 
         Boolean isAll;  //是否全为英文
         for (int i = 0; i < len; i++) {
-            isAll = true;
+
             String str = s[i];
             int strLen = str.length(); //当前字符串长度
             if (strLen < 4) {    //字符串小于4不符合
                 continue;
             }
-            for (int j = 0; j < strLen; j++) {
-                if (!Character.isLetter(str.charAt(j))) {    //是否有非英文
-                    isAll = false;
-                }
-            }
-            if (isAll) {
+            String[] split = str.split("[a-zA-Z]");
+
+            if (split.length == 0) {
                 str = reverseStr(str);  //全英文则反转
             }
             for (int j = 0; j <= strLen - 4; j++) {
@@ -40,10 +51,9 @@ public class OD38 {
     }
 
     public static String reverseStr(String s) {
-        if (s.length() <= 1) {
-            return s;
-        }
-        return reverseStr(s.substring(1)) + s.substring(0, 1);
+        StringBuilder ssb = new StringBuilder(s);
+        ssb.reverse();
+        return ssb.toString();
     }
 
     public static boolean isKYJ(String str) {

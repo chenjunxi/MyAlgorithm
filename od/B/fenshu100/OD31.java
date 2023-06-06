@@ -2,87 +2,75 @@ package com.od.B.fenshu100;
 
 import java.util.*;
 
+/*
+ *模拟消息队列
+2 22 1 11 4 44 5 55 3 33
+1 7 2 3
+
+
+思路：把发布转成状态数组dp，
+遍历订阅者list，存放treemap中，数据结构题
+ * */
 public class OD31 {
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
 
-        String[] strings = sc.nextLine().split(" ");
-        int len = strings.length;
-        //发布者集合
-        List<Message> pubList = new ArrayList<>();
-        for (int i = 0; i < len; i += 2) {
-            //发布时间
-            int time = Integer.valueOf(strings[i]);
-            //消息详情
-            Message message = new Message(time, strings[i + 1]);
-            pubList.add(message);
-        }
-        Collections.sort(pubList);
+        String[] fabu = sc.nextLine().split(" ");
+        String[] dingyue = sc.nextLine().split(" ");
 
-        String[] strings1 = sc.nextLine().split(" ");
-        int len1 = strings1.length;
-        //消费者集合
-        List<int[]> conList = new ArrayList<>();
-        for (int i = 0; i < len1; i += 2) {
-            //订阅时间
-            int a = Integer.valueOf(strings1[i]);
-            //取消订阅时间
-            int b = Integer.valueOf(strings1[i + 1]);
-            int[] ints = new int[]{a, b};
-            conList.add(ints);
+
+        int max = 0;
+        int[] fabunums = Arrays.stream(fabu).mapToInt(Integer::parseInt).toArray();
+
+        for (int i = 0; i < fabunums.length; i++) {
+
+            max = Math.max(max, fabunums[i]);
         }
 
-        Map<Integer, List<String>> map = new HashMap<>();
-        for (Message message : pubList) {
+        int[] dp = new int[max + 1];
+        for (int i = 0; i < fabunums.length; i += 2) {
+            dp[fabunums[i]] = fabunums[i + 1];
+        }
 
-            int time = message.time;
-            String content = message.content;
-            //消费者id
-            int index = -1;
-            for (int i = 0; i < conList.size(); i++) {
-                //消费者订阅和取消订阅时间
-                int[] times = conList.get(i);
-                if (time > times[0] && time < times[1]) {
-                    //订阅时间内的最后一个消费者（优先级最高）
-                    index = i;
-                }
-                if (time == times[0]) {
-                    //首次订阅优先获取消息
-                    index = i;
-                    break;
-                }
-            }
+        ArrayList<int[]> list = new ArrayList<>();
+        for (int i = 0; i < dingyue.length; i += 2) {
+            list.add(new int[]{Integer.valueOf(dingyue[i]), Integer.valueOf(dingyue[i + 1])});
+        }
 
-            if (index == -1) {
-                //没有消费者消费信息
-                continue;
-            }
 
-            if (map.containsKey(index)) {
-                map.get(index).add(content);
-            } else {
-                List<String> list = new ArrayList<>();
-                list.add(content);
-                map.put(index, list);
+        TreeMap<Integer, ArrayList<int[]>> map = new TreeMap<>();
+        for (int i = list.size() - 1; i >= 0; i--) {
+            int[] ints = list.get(i);
+            int start = ints[0];
+            int end = ints[1];
+
+            ArrayList<int[]> temp = new ArrayList<>();
+            for (int j = start; j < end; j++) {
+
+                int i1 = dp[j];
+                if (i1 == 0) continue;
+
+
+                temp.add(new int[]{j, i1});
+                dp[j] = 0;
             }
+            temp.sort((a, b) -> a[0] - b[0]);
+
+            map.put(i, temp);
 
         }
 
-        for (int i = 0; i < len1 / 2; i++) {
-
-            if (!map.containsKey(i)) {
-                //没有任何消息则输出-1
-                System.out.println(-1);
-                continue;
+        //输出即可
+        Set<Map.Entry<Integer, ArrayList<int[]>>> entries = map.entrySet();
+        for (Map.Entry<Integer, ArrayList<int[]>> m : map.entrySet()) {
+            ArrayList<int[]> value = m.getValue();
+            for (int[] a : value) {
+                System.out.print(a[1] + " ");
             }
-
-            String res = "";
-            for (String str : map.get(i)) {
-                res += str + " ";
-            }
-            System.out.println(res.substring(0, res.length() - 1));
+            System.out.println();
         }
+
 
     }
 

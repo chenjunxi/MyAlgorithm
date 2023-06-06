@@ -1,7 +1,19 @@
 package com.od.B.fenshu100;
 
 import java.util.Scanner;
+/*
+* 判断不等式
+a11*x1+a12*x2+a13*x3+a14*x4+a15*x5<=b1;
+a21*x1+a22*x2+a23*x3+a24*x4+a25*x5<=b2;
 
+a31*x1+a32*x2+a33*x3+a34*x4+a35*x5<=b3;
+
+最大差=max{ 
+(a11*x1+a12*x2+a13*x3+a14*x4+a15*x5-b1), 
+(a21*x1+a22*x2+a23*x3+a24*x4+a25*x5-b2), 
+(a31*x1+a32*x2+a33*x3+a34*x4+a35*x5-b3)  }类型为整数(输出浮点数的整数部分)
+
+* */
 public class OD35 {
     public static void main(String[] args) {
 

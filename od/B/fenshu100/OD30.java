@@ -1,7 +1,16 @@
 package com.od.B.fenshu100;
 
 import java.util.*;
+/*
+*比赛评分
+4,5
+10,6,9,7,6
+9,10,6,7,5
+8,10,6,5,10
+9,10,8,4,9
 
+思路：排序加逻辑题，技巧是用到状态数组记录每个得分数量
+* */
 public class OD30 {
     public static void main(String[] args) {
 
