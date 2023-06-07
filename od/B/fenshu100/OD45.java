@@ -2,6 +2,14 @@ package com.od.B.fenshu100;
 
 import java.util.Scanner;
 
+/*
+* 代码编辑器
+*
+* 思路：逻辑题，每个指令案例都要测试好
+* */
+
+
+
 public class OD45 {
     public static void main(String[] args) {
 

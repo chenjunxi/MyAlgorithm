@@ -1,43 +1,69 @@
 package com.od.B.fenshu100;
 
-import java.util.Scanner;
+import java.util.*;
 
+/*
+*打开监控器
+监控器打开条件：
+1.本身车位停有车的时候打开。
+2.如果本身车位没有停车，但是其四面停有车，也要打开。
+3 3
+0 0 0
+0 1 0
+0 0 0
+输出5
+坐标(0,1)本身没停车，但是其下方停车了，所以(0,1)处的监控器需要打开
+依次类推
+3 3
+0 0 0
+0 1 0
+0 1 0
+
+3 3
+0 0 0
+0 1 0
+0 1 1
+
+其实就是求二维数组中，值为的四面有多少个0，统计过的位置标识为2，然后加上本
+
+* */
 public class OD42 {
+
     public static void main(String[] args) {
+        // 处理输入
+        Scanner in = new Scanner(System.in);
+        int m = in.nextInt();
+        int n = in.nextInt();
 
-        Scanner sc = new Scanner(System.in);
-
-        int m = sc.nextInt();
-        int n = sc.nextInt();
-        int[][] parking = new int[m][n];
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < m; j++) {
-                parking[i][j] = sc.nextInt();
-            }
-        }
-
-        int res = 0;
+        int[][] dp = new int[m][n];
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
-                if (parking[i][j] == 1) {
-                    //本身停车了
-                    res++;
-                } else if (i > 0 && parking[i - 1][j] == 1) {
-                    //上方停车了
-                    res++;
-                } else if (i < m - 1 && parking[i + 1][j] == 1) {
-                    //下方停车了
-                    res++;
-                } else if (j > 0 && parking[i][j - 1] == 1) {
-                    //左方停车了
-                    res++;
-                } else if (j < n - 1 && parking[i][j + 1] == 1) {
-                    //右方停车了
-                    res++;
-                }
+                dp[i][j] = in.nextInt();
             }
         }
 
-        System.out.println(res);
+        int result = 0;
+        for (int x = 0; x < m; x++) {
+            for (int y = 0; y < n; y++) {
+                if (dp[x][y] == 1) {
+                    result++;
+                    result += dfs(dp, x - 1, y, m, n);
+                    result += dfs(dp, x + 1, y, m, n);
+                    result += dfs(dp, x, y - 1, m, n);
+                    result += dfs(dp, x, y + 1, m, n);
+                }
+
+            }
+        }
+        System.out.println(result);
+
+    }
+
+    private static int dfs(int[][] dp, int x, int y, int m, int n) {
+        if (x < 0 || y < 0 || x >= m || y >= n || dp[x][y] != 0) {
+            return 0;
+        }
+        dp[x][y] = 2;
+        return 1;
     }
 }

@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Scanner;
-
+/*
+流水线
+其实就是求同一列中数字之和，哪个最大
+* */
 public class OD40 {
     /**
      * 3 5

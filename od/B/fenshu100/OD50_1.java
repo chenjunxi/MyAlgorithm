@@ -2,7 +2,14 @@ package com.od.B.fenshu100;
 
 import java.util.Scanner;
 
-public class OD50 {
+/*
+* 经典保护屏
+800*600范围
+logo以x和y轴同时每秒一分像素移动，也就是45度角移动
+0 0 10 初始位置和10秒，求10秒的坐标
+10 10
+* */
+public class OD50_1 {
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);

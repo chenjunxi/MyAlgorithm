@@ -2,6 +2,14 @@ package com.od.B.fenshu100;
 
 import java.util.*;
 
+/*
+ * 阿里巴巴找黄金箱 IV
+
+1,1,1,1,3,3,3,6,6,8
+输出2
+
+又是map题，记录数字的出现的次数，然后按次数降序，优先销毁出现次数最多的。当累加销毁的数量达到要求就break
+ * */
 public class OD44 {
     public static void main(String[] args) {
 

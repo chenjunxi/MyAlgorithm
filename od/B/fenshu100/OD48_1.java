@@ -3,9 +3,45 @@ package com.od.B.fenshu100;
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class OD48 {
+/*
+* 阿里巴巴找黄金
+求连续K个数最大和
+2,10,-3,-8,40,5
+4
+输出39
+10,1,2,3,4,5,10
+3
+思路：滑窗，左减右加
+* */
+public class OD48_1 {
     public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
 
+        int[] ints = Arrays.stream(sc.nextLine().split(",")).mapToInt(Integer::parseInt).toArray();
+        int k = sc.nextInt();
+
+
+        int count = 0;
+        for (int i = 0; i < k; i++) {
+            count += ints[i];
+        }
+
+        int left = ints[0];
+        int max = count;
+        for (int i = 1; i < ints.length - k + 1; i++) {
+
+            int right = ints[i + k - 1];
+            count -= left;
+            count += right;
+            left = ints[i];
+            max = Math.max(max, count);
+
+        }
+
+        System.out.println(max);
+    }
+
+    private static void demo() {
         Scanner sc = new Scanner(System.in);
 
         int[] ints = Arrays.stream(sc.nextLine().split(",")).mapToInt(Integer::parseInt).toArray();

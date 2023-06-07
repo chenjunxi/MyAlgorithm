@@ -19,6 +19,8 @@ import java.util.Scanner;
  }
 
 
+思路：双指针，谁小移到谁
+
 * */
 public class OD02 {
 
@@ -38,7 +40,26 @@ public class OD02 {
             num[m] = Integer.parseInt(ss[m]);
         }
 
+        int max = 0;
+        int start = 0;
+        int end = length - 1;
 
+
+        while (start < end) {
+            int h = Math.min(num[start], num[end]);
+            max = Math.max(h * (end - start), max);
+            if (num[start] > num[end]) {
+                end--;
+            } else {
+                start++;
+            }
+        }
+
+        System.out.println(max);
+
+    }
+
+    private static int getMax(int length, int[] num) {
         int max = 0;    //最大面积
         for (int i = 0; i < length; i++) {
             for (int j = i + 1; j < length; j++) {
@@ -46,8 +67,6 @@ public class OD02 {
                 max = Math.max(max, i1);
             }
         }
-
-        System.out.println(max);
-
+        return max;
     }
 }

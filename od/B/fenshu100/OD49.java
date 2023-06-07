@@ -4,6 +4,15 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Scanner;
 
+/*
+* 字符串统计
+给出全集字符和占用字符串，求剩下的字符
+a:3,b:5,c:2@a:1,b:2
+
+输出：a:2,b:3,c:2
+
+思路：map记录字母的数量
+* */
 public class OD49 {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);

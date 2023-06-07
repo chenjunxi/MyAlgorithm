@@ -1,7 +1,11 @@
 package com.od.B.fenshu100;
 
 import java.util.*;
+/*
+* 网站统计
 
+思路：map记录次数，然后对map进行排序
+* */
 public class OD41 {
     public static void main(String[] args) {
 
