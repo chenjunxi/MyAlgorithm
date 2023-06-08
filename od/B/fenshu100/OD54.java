@@ -1,7 +1,14 @@
 package com.od.B.fenshu100;
 
 import java.util.*;
-
+/*
+* 求符合条件元组个数
+2 7 11 15
+2
+9
+*
+* 思路：经典回溯法
+* */
 public class OD54 {
     public static int res = 0;
     public static int target;
@@ -16,6 +23,36 @@ public class OD54 {
         int k = sc.nextInt();
         target = sc.nextInt();
 
+        ArrayList<ArrayList<Integer>> list = new ArrayList<>();
+        ArrayDeque<Integer> path = new ArrayDeque<>();
+
+        dfs(list, path, nums, 0, 0, k);
+
+        System.out.println(list);
+
+    }
+
+    private static void dfs(ArrayList<ArrayList<Integer>> list, ArrayDeque<Integer> path, int[] nums, int index, int sum, int k) {
+        if (path.size() == 2 && sum == target) {
+            list.add(new ArrayList<>(path));
+            return;
+        }
+
+        for (int i = index; i < nums.length; i++) {
+            if (path.contains(nums[i])) continue;
+
+            if (sum + nums[i] <= target) {
+                path.add(nums[i]);
+                sum += nums[i];
+                dfs(list, path, nums, i + 1, sum, k);
+                sum -= nums[i];
+                path.removeLast();
+            }
+
+        }
+    }
+
+    private static void demo(int[] nums, int k) {
         combine(nums, k, new ArrayList<>(), 0);
 
         System.out.println(res);

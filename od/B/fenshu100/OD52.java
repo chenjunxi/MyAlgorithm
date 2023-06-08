@@ -5,12 +5,9 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * CLassName:pro1
- * Package:com.pxb
- * Description:
- *
- * @Date: 2023/5/23 18:42
- * Auther:
+ * VLAN资源池
+ * <p>
+ * 思路使用状态数组
  */
 public class OD52 {
     public static void main(String[] args) {

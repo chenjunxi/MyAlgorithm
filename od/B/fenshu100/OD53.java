@@ -1,11 +1,60 @@
 package com.od.B.fenshu100;
 
+import java.util.ArrayDeque;
 import java.util.Scanner;
 
+/*
+*非严格递增连续数字序列
+abc2234019A334bc
+
+使用stack记录递增元素，stack的大小就是个数
+
+首先有三种情况会进行计算连续个数
+1.遇到不连续的时候
+2.最后一个元素
+3.遇到字母的时候
+
+* */
 public class OD53 {
 
-    public static void main(String[] args) {
+    static public int max = 0;
 
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String line = sc.nextLine();
+
+        ArrayDeque<Integer> stack = new ArrayDeque<>();
+        for (int i = 0; i < line.length(); i++) {
+
+            char c = line.charAt(i);
+
+            if (Character.isDigit(c)) {
+                if (!stack.isEmpty() && line.charAt(stack.peek()) > c) {
+                    max = Math.max(max, stack.size());
+                    stack.clear();
+
+                }
+                stack.push(i);
+                if (!stack.isEmpty() && i == line.length() - 1) {
+
+                    max = Math.max(max, stack.size());
+                    stack.clear();
+                    break;
+                }
+
+            } else {
+                if (!stack.isEmpty()) {
+                    max = Math.max(max, stack.size());
+                    stack.clear();
+                }
+            }
+
+
+        }
+        System.out.println(max);
+    }
+
+    private static void demo() {
         Scanner sc = new Scanner(System.in);
 
         String s = sc.nextLine();
