@@ -1,4 +1,4 @@
-package com.od.B.EX;
+package com.od.B.fenshu100;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,7 +22,7 @@ import java.util.Scanner;
 
 
 * */
-public class ODB18 {
+public class OD62_1 {
     static class Light {
         int id;
         int x;

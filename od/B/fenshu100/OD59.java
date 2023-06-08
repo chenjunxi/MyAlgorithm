@@ -1,4 +1,4 @@
-package com.od.B.EX;
+package com.od.B.fenshu100;
 
 import java.util.Arrays;
 import java.util.Scanner;
@@ -26,7 +26,7 @@ import java.util.Scanner;
 
 思路 用两个数组分别记下每行或列出现0的个数
 * */
-public class ODB17 {
+public class OD59 {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
 

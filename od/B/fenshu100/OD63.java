@@ -1,4 +1,4 @@
-package com.od.B.EX;
+package com.od.B.fenshu100;
 
 import java.util.*;
 
@@ -11,7 +11,7 @@ import java.util.*;
 正常序列为 8 9 10 11 12
 
 * */
-public class ODB29 {
+public class OD63 {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         String input_str = in.next();
