@@ -1,5 +1,9 @@
 package com.leecode;
+/*
+*
+跳跃游戏
 
+* */
 public class LeeCode55 {
     public static void main(String[] args) {
         int[] num = {2, 3, 1, 1, 4};
