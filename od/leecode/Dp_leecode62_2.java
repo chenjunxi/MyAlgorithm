@@ -1,6 +1,9 @@
 package com.leecode;
 
-public class Dp04 {
+/*
+ * 不同路径
+ * */
+public class Dp_leecode62_2 {
     public static void main(String[] args) {
 
     }
@@ -16,7 +19,7 @@ public class Dp04 {
         }
 
         for (int i = 0; i < n; i++) {
-            dp[i][0] = 1;
+            dp[0][i] = 1;
         }
 
 

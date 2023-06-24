@@ -1,5 +1,8 @@
 package com.leecode;
 
+//*
+// 字符串压缩
+// */
 public class leecode443_2 {
     public static void main(String[] args) {
 

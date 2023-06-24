@@ -6,7 +6,7 @@ import java.util.Arrays;
  * 最长递增子序列
  *
  * */
-public class Dp_leecode300 {
+public class Dp_leecode300_2 {
     public static void main(String[] args) {
 
         int[] nums = {};

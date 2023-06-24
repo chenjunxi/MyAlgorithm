@@ -1,5 +1,6 @@
 package com.leecode;
 
+//环形链表
 public class leecode142 {
 
     static class ListNode {

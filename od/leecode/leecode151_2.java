@@ -10,17 +10,48 @@ import java.util.Arrays;
 public class leecode151_2 {
     public static void main(String[] args) {
 
-        String s = " hello world!  ";
+        String s = " chen junxi hello world!  ";
 
-        char[] chars = s.toCharArray();
-
-        chars = removeSpace(chars);
-
-        reverse(chars, 0, chars.length - 1);
-        System.out.println(new String(chars));
-        reverseWord(chars);
-        System.out.println(new String(chars));
+        System.out.println(reverseWords(s));
     }
+
+    public static String reverseWords(String s) {
+
+        StringBuilder sb = new StringBuilder();
+        int right = s.length() - 1;
+        int left = 0;
+
+        //清除左右两侧的0
+        while (s.charAt(right) == ' ') {
+            right--;
+        }
+        while (s.charAt(left) == ' ') {
+            left++;
+        }
+
+        while (right >= left) {
+
+            int index = right;
+            //找到要存储的单词
+            while (index >= left && s.charAt(index) != ' ') {
+                index--;
+            }
+            //存到StringBuilder
+            sb.append(s.substring(index + 1, right + 1));
+            if (index > left) {
+                sb.append(' ');
+            }
+            //找下一个单词
+            while (index >= left && s.charAt(index) == ' ') {
+                index--;
+            }
+            right = index;
+
+        }
+        return sb.toString();
+
+    }
+
 
     private static void reverse(char[] chars, int i, int j) {
 

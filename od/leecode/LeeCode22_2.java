@@ -5,7 +5,7 @@ import java.util.ArrayList;
 * 括号生成
 * l一定要大于等于r
 * */
-public class LeeCode22 {
+public class LeeCode22_2 {
     public static void main(String[] args) {
 
         int n = 2;

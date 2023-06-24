@@ -10,9 +10,9 @@ import java.util.Arrays;
 原数组：       [1       2       3       4]
 左部分的乘积：   1       1      1*2    1*2*3
 右部分的乘积： 2*3*4*1   3*4*1  4*1    1
-结果：        1*2*3*4   1*3*4  1*2*4  1*2*3*1
+结果：        1*2*3*4   1*3*4  1*2*4*1  1*2*3*1
  * */
-public class leecode238_2 {
+public class leecode238_3 {
     public static void main(String[] args) {
 
         int[] nums = {1, 2, 3, 4};
@@ -28,6 +28,7 @@ public class leecode238_2 {
 
         System.out.println(Arrays.toString(ans));
 
+        //最后一个元素直接不用计算了
         for (int i = length - 1; i > 0; i--) {
             right *= nums[i];
             ans[i - 1] *= right;
